@@ -12,7 +12,6 @@ import { motion, AnimatePresence } from "framer-motion"
 import { cn } from "@/lib/utils"
 import { ChevronRight, ChevronLeft, Check, Upload, Mic } from 'lucide-react'
 
-// Steps definition
 const STEPS = [
     { id: 'goal', title: 'What is your fitness goal?' },
     { id: 'gender', title: 'What is your gender?' },
@@ -23,6 +22,8 @@ const STEPS = [
     { id: 'injuries', title: 'Do you have any injuries?' },
     { id: 'diet', title: 'Do you assume a specific diet?' },
     { id: 'commitment', title: 'How many days/week will you commit?' },
+    { id: 'training_location', title: 'Where do you prefer to train?' },
+    { id: 'training_equipment', title: 'What equipment do you have available?' },
     { id: 'supplements', title: 'Do you take any supplements?' },
     { id: 'sleep', title: 'How is your sleep quality?' },
     { id: 'photo', title: 'Body Analysis (Optional)' },
@@ -39,11 +40,13 @@ export default function OnboardingWizard() {
         currentWeight: 75,
         targetWeight: 70,
         experience: 'beginner',
-        injuries: [],
+        injuries: [] as string[],
         diet: 'classic',
         commitment: 3,
+        trainingLocation: 'gym',
+        trainingEquipment: [] as string[],
         activityLevel: 'moderate',
-        supplements: [],
+        supplements: [] as string[],
         sleep: 'good',
         aiInput: '',
     })
@@ -341,8 +344,66 @@ export default function OnboardingWizard() {
                                     </div>
                                 )}
 
-                                {/* 10. SUPPLEMENTS */}
+                                {/* 10. TRAINING LOCATION */}
                                 {currentStep === 9 && (
+                                    <div className="grid grid-cols-2 gap-4">
+                                        {['Gym', 'Home'].map((loc) => (
+                                            <button
+                                                key={loc}
+                                                onClick={() => updateField('trainingLocation', loc.toLowerCase())}
+                                                className={cn(
+                                                    "h-32 rounded-2xl border-2 flex flex-col items-center justify-center gap-2 transition-all",
+                                                    formData.trainingLocation === loc.toLowerCase()
+                                                        ? "border-primary bg-primary/10 text-primary"
+                                                        : "border-border hover:border-primary/50"
+                                                )}
+                                            >
+                                                <span className="text-lg font-bold">{loc}</span>
+                                            </button>
+                                        ))}
+                                    </div>
+                                )}
+
+                                {/* 11. TRAINING EQUIPMENT */}
+                                {currentStep === 10 && (
+                                    <div className="space-y-4">
+                                        {formData.trainingLocation === 'gym' ? (
+                                            <div className="text-center space-y-4">
+                                                <p className="text-muted-foreground">Since you train at the gym, we assume you have access to standard equipment.</p>
+                                                <Check className="w-12 h-12 text-primary mx-auto" />
+                                            </div>
+                                        ) : (
+                                            <>
+                                                <div className="grid grid-cols-2 gap-3">
+                                                    {['Dumbbells', 'Barbell', 'Bands', 'Kettlebell', 'Bench', 'Pull-up Bar'].map((eq) => (
+                                                        <button
+                                                            key={eq}
+                                                            onClick={() => toggleArrayItem('trainingEquipment', eq)}
+                                                            className={cn(
+                                                                "h-24 rounded-2xl border-2 flex items-center justify-center p-2 text-center text-sm font-semibold transition-all",
+                                                                (formData.trainingEquipment as string[]).includes(eq)
+                                                                    ? "border-primary bg-primary/10 text-primary"
+                                                                    : "border-border hover:border-primary/50"
+                                                            )}
+                                                        >
+                                                            {eq}
+                                                        </button>
+                                                    ))}
+                                                </div>
+                                                <Button
+                                                    variant="ghost"
+                                                    onClick={() => updateField('trainingEquipment', [])}
+                                                    className="w-full text-muted-foreground"
+                                                >
+                                                    I only use Bodyweight
+                                                </Button>
+                                            </>
+                                        )}
+                                    </div>
+                                )}
+
+                                {/* 12. SUPPLEMENTS */}
+                                {currentStep === 11 && (
                                     <div className="space-y-4">
                                         <div className="grid grid-cols-2 gap-3">
                                             {['Whey Protein', 'Creatine', 'Vitamins', 'BCAAs'].map((supp) => (
@@ -370,8 +431,8 @@ export default function OnboardingWizard() {
                                     </div>
                                 )}
 
-                                {/* 11. SLEEP */}
-                                {currentStep === 10 && (
+                                {/* 13. SLEEP */}
+                                {currentStep === 12 && (
                                     <div className="space-y-3">
                                         {['Excellent (>8h)', 'Good (7-8h)', 'Fair (6-7h)', 'Poor (<6h)'].map((sleep) => (
                                             <button
@@ -391,8 +452,8 @@ export default function OnboardingWizard() {
                                     </div>
                                 )}
 
-                                {/* 12. BODY ANALYSIS (Placeholder) */}
-                                {currentStep === 11 && (
+                                {/* 14. BODY ANALYSIS (Placeholder) */}
+                                {currentStep === 13 && (
                                     <div className="flex flex-col items-center justify-center border-2 border-dashed border-border rounded-3xl p-8 space-y-4">
                                         <Upload className="w-12 h-12 text-muted-foreground" />
                                         <div className="text-center">
@@ -403,8 +464,8 @@ export default function OnboardingWizard() {
                                     </div>
                                 )}
 
-                                {/* 13. AI INPUT */}
-                                {currentStep === 12 && (
+                                {/* 15. AI INPUT */}
+                                {currentStep === 14 && (
                                     <div className="space-y-4">
                                         <div className="relative">
                                             <Textarea

@@ -16,6 +16,8 @@ const onboardingSchema = z.object({
     injuries: z.array(z.string()).optional(),
     diet: z.string().optional(),
     commitment: z.coerce.number().min(1).max(7).optional(),
+    trainingLocation: z.string().optional(),
+    trainingEquipment: z.array(z.string()).optional(),
     supplements: z.array(z.string()).optional(),
     sleep: z.string().optional(),
     aiInput: z.string().optional(),
@@ -52,6 +54,8 @@ export async function submitOnboarding(data: z.infer<typeof onboardingSchema>) {
                 injuries: validData.injuries,
                 diet: validData.diet,
                 commitment: validData.commitment,
+                trainingLocation: validData.trainingLocation,
+                trainingEquipment: validData.trainingEquipment,
                 supplements: validData.supplements,
                 sleep: validData.sleep,
                 aiInput: validData.aiInput, // This will be used by the AI Agent later

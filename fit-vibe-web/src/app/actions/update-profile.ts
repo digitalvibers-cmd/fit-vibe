@@ -11,6 +11,9 @@ const profileSchema = z.object({
     gender: z.string().nonempty("Gender is required"),
     goal: z.string().optional(),
     activityLevel: z.string().optional(),
+    trainingLocation: z.string().optional(),
+    trainingEquipment: z.string().optional(),
+    aiInput: z.string().optional(),
 })
 
 export async function updateProfile(prevState: any, formData: FormData) {
@@ -28,6 +31,9 @@ export async function updateProfile(prevState: any, formData: FormData) {
         gender: formData.get('gender'),
         goal: formData.get('goal'),
         activityLevel: formData.get('activityLevel'),
+        trainingLocation: formData.get('trainingLocation'),
+        trainingEquipment: formData.get('trainingEquipment'),
+        aiInput: formData.get('aiInput'),
     }
 
     const validatedFields = profileSchema.safeParse(rawData)
@@ -36,7 +42,7 @@ export async function updateProfile(prevState: any, formData: FormData) {
         return { error: validatedFields.error.format() }
     }
 
-    const { display_name, age, height, gender, goal, activityLevel } = validatedFields.data
+    const { display_name, age, height, gender, goal, activityLevel, trainingLocation, trainingEquipment, aiInput } = validatedFields.data
 
     // Fetch current preferences to merge
     const { data: currentProfile } = await supabase
@@ -47,10 +53,17 @@ export async function updateProfile(prevState: any, formData: FormData) {
 
     const currentPrefs = currentProfile?.preferences || {}
 
+    const parsedEquipment = trainingEquipment
+        ? trainingEquipment.split(',').map((e: string) => e.trim()).filter(Boolean)
+        : currentPrefs.trainingEquipment || [];
+
     const updatedPreferences = {
         ...currentPrefs,
         goal,
-        activityLevel
+        activityLevel,
+        trainingLocation,
+        trainingEquipment: parsedEquipment,
+        aiInput
     }
 
     try {

@@ -2,7 +2,8 @@
 
 import { useState } from 'react'
 import { Button } from '@/components/ui/button'
-import { generatePlan } from '../actions/generate-plan'
+import { generateWorkoutPlan } from '../actions/generate-workout-plan'
+import { generateMealPlan } from '../actions/generate-meal-plan'
 import { toast } from 'sonner'
 import { Loader2 } from 'lucide-react'
 
@@ -12,14 +13,17 @@ export default function GeneratePlanButton() {
     const handleGenerate = async () => {
         setLoading(true)
         try {
-            const result = await generatePlan()
-            if (result.error) {
-                toast.error(result.error)
+            const [workoutResult, mealResult] = await Promise.all([
+                generateWorkoutPlan(7),
+                generateMealPlan(7),
+            ])
+            if (workoutResult.error || mealResult.error) {
+                toast.error(workoutResult.error || mealResult.error || 'Generation failed.')
             } else {
-                toast.success("Plan generated successfully!")
+                toast.success('7-day plan generated!')
             }
         } catch (e) {
-            toast.error("Something went wrong.")
+            toast.error('Something went wrong.')
         } finally {
             setLoading(false)
         }

@@ -102,6 +102,39 @@ export default function ProfileForm({ profile }: { profile: any }) {
                 </div>
             </div>
 
+            <div className="space-y-2">
+                <Label htmlFor="trainingLocation">Training Location</Label>
+                <select
+                    id="trainingLocation"
+                    name="trainingLocation"
+                    defaultValue={profile.preferences?.trainingLocation || ''}
+                    className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                >
+                    <option value="gym">Gym</option>
+                    <option value="home">Home</option>
+                </select>
+            </div>
+
+            <div className="space-y-2">
+                <Label htmlFor="trainingEquipment">Training Equipment (comma separated)</Label>
+                <Input
+                    id="trainingEquipment"
+                    name="trainingEquipment"
+                    defaultValue={profile.preferences?.trainingEquipment?.join(', ') || ''}
+                    placeholder="e.g. Dumbbells, Bands"
+                />
+            </div>
+
+            <div className="space-y-2">
+                <Label htmlFor="aiInput">Additional AI Instructions</Label>
+                <Input
+                    id="aiInput"
+                    name="aiInput"
+                    defaultValue={profile.preferences?.aiInput || ''}
+                    placeholder="e.g. I have bad knees"
+                />
+            </div>
+
             {state?.error && (
                 <p className="text-sm text-red-500">{typeof state.error === 'string' ? state.error : 'Invalid input'}</p>
             )}

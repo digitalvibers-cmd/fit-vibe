@@ -4,8 +4,7 @@ import { redirect } from 'next/navigation'
 import Link from 'next/link'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-import { Plus, Flame, Utensils, Activity, PlayCircle, Loader2 } from 'lucide-react'
-import { generatePlan } from '../actions/generate-plan'
+import { Plus, Flame, Utensils, Activity, PlayCircle } from 'lucide-react'
 
 import GeneratePlanButton from './GeneratePlanButton' // Client component for interactivity
 
@@ -56,8 +55,14 @@ export default async function DashboardPage() {
     // Parse preferences
     const prefs = profile.preferences || {}
     const commitment = prefs.commitment || 0
-    // Check if we have a generated plan
-    const latestPlan = prefs.latest_plan
+    // Check if we have generated plans
+    const latestWorkoutPlan = prefs.latest_workout_plan || null
+    const latestMealPlan = prefs.latest_meal_plan || null
+    const hasAnyPlan = latestWorkoutPlan || latestMealPlan
+
+    // Get today's workout and meal if plan exists
+    const todayWorkout = latestWorkoutPlan?.workouts?.find((w: any) => w.day === 1) || latestWorkoutPlan?.workouts?.[0] || null
+    const todayMeal = latestMealPlan?.days?.find((d: any) => d.day === 1) || latestMealPlan?.days?.[0] || null
 
     // Calculate BMI
     const bmi = calculateBMI(Number(goal.current_weight), profile.height)
@@ -155,41 +160,49 @@ export default async function DashboardPage() {
                         </Link>
                     </div>
 
-                    {latestPlan ? (
+                    {hasAnyPlan ? (
                         <div className="space-y-4">
-                            <Link href="/workout" className="block">
-                                <Card className="border-none shadow-sm hover:shadow-md transition-all cursor-pointer">
-                                    <CardContent className="p-4 flex items-center gap-4">
-                                        <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center text-primary shrink-0">
-                                            <Activity className="w-6 h-6" />
-                                        </div>
-                                        <div className="flex-1">
-                                            <h4 className="font-bold">{latestPlan.workout.title}</h4>
-                                            <p className="text-sm text-muted-foreground">{latestPlan.workout.duration} • {latestPlan.workout.exercises.length} Exercises</p>
-                                        </div>
-                                        <div className="h-10 w-10 rounded-full flex items-center justify-center hover:bg-accent hover:text-accent-foreground">
-                                            <PlayCircle className="w-6 h-6 text-primary" />
-                                        </div>
-                                    </CardContent>
-                                </Card>
-                            </Link>
+                            {todayWorkout && (
+                                <Link href="/workout" className="block">
+                                    <Card className="border-none shadow-sm hover:shadow-md transition-all cursor-pointer">
+                                        <CardContent className="p-4 flex items-center gap-4">
+                                            <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center text-primary shrink-0">
+                                                <Activity className="w-6 h-6" />
+                                            </div>
+                                            <div className="flex-1">
+                                                <h4 className="font-bold">{todayWorkout.isRestDay ? 'Rest Day' : (todayWorkout.title || 'Workout')}</h4>
+                                                <p className="text-sm text-muted-foreground">
+                                                    {todayWorkout.isRestDay ? 'Active Recovery' : `${todayWorkout.duration || ''} • ${todayWorkout.exercises?.length || 0} Exercises`}
+                                                </p>
+                                            </div>
+                                            <div className="h-10 w-10 rounded-full flex items-center justify-center hover:bg-accent hover:text-accent-foreground">
+                                                <PlayCircle className="w-6 h-6 text-primary" />
+                                            </div>
+                                        </CardContent>
+                                    </Card>
+                                </Link>
+                            )}
 
-                            <Link href="/meals" className="block">
-                                <Card className="border-none shadow-sm hover:shadow-md transition-all cursor-pointer">
-                                    <CardContent className="p-4 flex items-center gap-4">
-                                        <div className="w-12 h-12 rounded-2xl bg-green-100 flex items-center justify-center text-green-600 shrink-0">
-                                            <Utensils className="w-6 h-6" />
-                                        </div>
-                                        <div className="flex-1">
-                                            <h4 className="font-bold">{latestPlan.meal.total_calories} kcal Target</h4>
-                                            <p className="text-sm text-muted-foreground">{Object.keys(latestPlan.meal.meals).length} Meals • {latestPlan.meal.macros.protein} Protein</p>
-                                        </div>
-                                        <div className="h-10 w-10 rounded-full flex items-center justify-center hover:bg-accent hover:text-accent-foreground">
-                                            <Plus className="w-5 h-5" />
-                                        </div>
-                                    </CardContent>
-                                </Card>
-                            </Link>
+                            {todayMeal && (
+                                <Link href="/meals" className="block">
+                                    <Card className="border-none shadow-sm hover:shadow-md transition-all cursor-pointer">
+                                        <CardContent className="p-4 flex items-center gap-4">
+                                            <div className="w-12 h-12 rounded-2xl bg-green-100 flex items-center justify-center text-green-600 shrink-0">
+                                                <Utensils className="w-6 h-6" />
+                                            </div>
+                                            <div className="flex-1">
+                                                <h4 className="font-bold">{todayMeal.total_calories} kcal Target</h4>
+                                                <p className="text-sm text-muted-foreground">
+                                                    {todayMeal.meals?.length || 0} Meals • {todayMeal.macros?.protein || '-'} Protein
+                                                </p>
+                                            </div>
+                                            <div className="h-10 w-10 rounded-full flex items-center justify-center hover:bg-accent hover:text-accent-foreground">
+                                                <Plus className="w-5 h-5" />
+                                            </div>
+                                        </CardContent>
+                                    </Card>
+                                </Link>
+                            )}
                         </div>
                     ) : (
                         /* AI Coach Promo / Generate Button */
