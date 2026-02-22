@@ -4,7 +4,12 @@ import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { createClient } from '@/utils/supabase/server'
 
-export async function login(formData: FormData) {
+interface ActionState {
+    error?: string;
+    success?: string;
+}
+
+export async function login(prevState: ActionState | null, formData: FormData): Promise<ActionState> {
     const supabase = await createClient()
 
     const email = formData.get('email') as string
@@ -23,7 +28,7 @@ export async function login(formData: FormData) {
     redirect('/dashboard')
 }
 
-export async function signup(formData: FormData) {
+export async function signup(prevState: ActionState | null, formData: FormData): Promise<ActionState> {
     const supabase = await createClient()
 
     const email = formData.get('email') as string
