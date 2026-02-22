@@ -5,7 +5,7 @@ import { revalidatePath } from 'next/cache'
 import { z } from 'zod'
 
 const profileSchema = z.object({
-    display_name: z.string().min(2, "Name must be at least 2 characters"),
+    display_name: z.string().min(3, "Name must be at least 3 characters"),
     age: z.coerce.number().min(1, "Age must be valid"),
     height: z.coerce.number().min(50, "Height must be valid"),
     gender: z.string().nonempty("Gender is required"),
