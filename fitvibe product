@@ -1,0 +1,130 @@
+Fit Vibe 
+
+
+Problem: Fitness health platforma koja pomaze ljudima da budu istrajni u postizanju ciljeva vezanih za zdrav zivot.
+
+Ovo resenje pomaze korisnicma da uz pomoc AI asistenta i automatizovanih procesa unaprede zdravlje kroz vežanje i zdravu ishrhranu. U postizanju ciljeva im pomazu AI asistenti specijalizovani za treninge i ishranu tako sto im kreiraju specifican trening i plan ishrane u skladu sa ciljevima korisnika. Na ovaj nacin korisnici:
+Stede vreme u planiranju treninga i obroka
+Smanjuju troskove personalnog treninga
+Ostanu motivisani za postizanje ciljeva kroz gemifikaciju (DuoLingo like)
+Osecaju se dobro i samopouzdano
+
+
+
+Ciljna grupa
+
+Muškarci i žene izmedju 30 i 50 godina koji teže zdravom životu, digitalno pismeni, ali ne uspevaju da ostvare ciljeve.
+
+Monetizacija
+Direktna prodaja oglasnog prostora
+Pretplata korisnika uz minimalan fee
+
+
+
+
+
+
+
+
+Arhitektura aplikacije
+
+Landing page sa osnovinm detaljima aplikaijce sa user friendly copy-jem i prelepim dizajnom u stilu zdravog zivota. Odakle korisnik ima mogucnost da se registuruje/prijavi.
+
+
+User profile stranica kojoj korisnik moze da pristupu nakon registracije/login-a na kojoj moze da upravalja svojim profilom, ciljevima, treninizima, ishranom…
+
+Ključne funkcionalnosti platforme
+
+Landing stranica sa detaljima platforme preko koje korisnik moze da se regusturje/login pomocu Gmail-a
+User profile dashboard kome korisnik moze da pristupi nakon logina i koji sadrži sledeće funkcionalnosti
+User profile page: Stranica gde korisnik moze da uredjuje svoje podatke kao sto su Ime prezime, email, sifra, godine, pol, tezina…
+Ciljevi: stranica na kojoj korinisk moze da definise jedan ili vise ciljeva kao sto su mrsavljenje (smanjenje kilograma). Korisnik na ovoj stranici moze da prati svoj progres, unosi vrednosti periodicno (npr. unese kilograme za taj dan)
+Plan treninga: korisnik moze da generise plan treninga na osnovu definisanog cilja uz pomoc AI asistenta. Plan treninga se upisuje u kalendar koji se nalazi na istoj stranici. Korisnik moze da bira intenzistet treninga, broj treninga nedeljno, Oprema (teretana, kuca…) da bi mu assistant kreirao odgovarajucu trening na osnovu inputa. Moze odabrati period za koji zeli da generise plan treniga. Korisnik moze da uveze svoj kalendar Gmail sa ovom kalendarom i upise u njega. 
+Plan ishrane: Korisnik ima mogucnost da generise plan ishrane na osnovu definisanog cilja uz pomoc AI asistenta. Korisnik moze odabrati period za koji zeli da generise plan ishrane, navesti namirnice na koje je alergican ili koje ne voli i druge specificnosti vezane za ishranu. Na pocetku dana sstize notifikacija 
+League (Gemifikacija): Ulogovani korisnici skupljaju poene na nedeljnom nivou u odnosu na postavljen cilj. Takmicai su gruposano po ligama u odnosu na odabrani cilj. Takmicari, imajuSvakog meseca se proglasava pobednik i dobija se nagrada (videcemo sta je nagrada)
+
+
+
+Zastita
+
+Podaci o korisniku moraju biti strogo zasticeni.
+
+
+
+
+
+
+Plan razvoja
+
+Na osnovu opisa proizvoda "Fitness health platforma" iz dokumenta, sledi predlog plana razvoja, počevši od Minimalno Održivog Proizvoda (MVP).Plan razvoja (Development Plan)
+
+Faza 1: Minimalno Održivi Proizvod (MVP)
+
+Cilj MVP-a je da korisnicima pruži osnovnu vrednost: AI asistenciju za kreiranje personalizovanih planova i praćenje osnovnog progresa.
+Komponenta
+Funkcionalnosti
+Pristup i Osnova
+Landing stranica: Osnovni detalji, user-friendly copy i dizajn.
+
+
+Registracija/Prijava: Mogućnost registracije i prijave (koristeći npr. Gmail).
+
+
+User Profile Page: Uređivanje osnovnih podataka (ime, prezime, email, šifra, godine, pol, težina).
+Definisanje Ciljeva
+Ciljevi: Definicija jednog ili više ciljeva (npr. mršavljenje).
+
+
+Praćenje Progresa (osnovno): Mogućnost unosa periodičnih vrednosti (npr. unos kilograma za taj dan).
+AI Asistent (Core Vrednost)
+Plan treninga: Generisanje osnovnog plana treninga na osnovu cilja, intenziteta i opreme (teretana, kuća). Prikaz plana unutar aplikacije (osnovni kalendar).
+
+
+Plan ishrane: Generisanje osnovnog plana ishrane na osnovu cilja i specificiranih alergija/namirnica koje ne voli.
+Bezbednost
+Zaštita podataka: Stroga zaštita unetih korisničkih podataka (osnovna implementacija sigurnosti).
+
+
+
+Faza 2: Proširenje Funkcionalnosti
+
+Cilj ove faze je unapređenje korisničkog iskustva i implementacija naprednijih funkcionalnosti.
+Komponenta
+Funkcionalnosti
+Integracije i Kalendar
+Gmail Kalendar Sinhronizacija: Mogućnost uvoza/izvoza planova treninga u korisnikov Gmail kalendar.
+Unapređenje AI Planova
+Napredne Opcije Planova: Detaljnije opcije za prilagođavanje treninga i ishrane (npr. izbor specifičnih dijeta, zamena vežbi).
+Notifikacije
+Dnevne notifikacije: Slanje notifikacije na početku dana za plan ishrane i podsetnici za treninge.
+Monetizacija
+Implementacija pretplate: Postavljanje platnog prolaza za naplatu minimalne pretplate.
+
+
+Direktna prodaja oglasa: Osnovna struktura za prodaju oglasnog prostora.
+
+
+
+Faza 3: Gamifikacija i Zajednica
+
+Implementacija jedinstvene funkcionalnosti koja motiviše korisnike i podstiče dugoročno zadržavanje.
+Komponenta
+Funkcionalnosti
+Gamifikacija
+League (Gemifikacija): Sistem bodovanja na nedeljnom nivou u odnosu na postavljeni cilj.
+
+
+Lige i Takmičenje: Gruposanje takmičara po ligama.
+
+
+Nagrade: Mehanizam za proglašavanje mesečnih pobednika i dodelu nagrada.
+Analitika
+Detaljan Progres: Napredni grafikoni i statistike za praćenje ciljeva (npr. BMI, potrošene kalorije).
+
+
+Buduća Poboljšanja (Future Enhancements)
+Integracija sa nosivim uređajima (smartwatches, fitness trackers).
+AI asistent za podršku i odgovore na pitanja korisnika (chat funkcionalnost).
+Video demonstracije vežbi unutar aplikacije.
+Funkcionalnost deljenja progresa na društvenim mrežama.
+
