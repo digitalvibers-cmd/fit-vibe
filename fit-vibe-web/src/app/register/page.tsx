@@ -17,7 +17,10 @@ export default function RegisterPage() {
                     </CardDescription>
                 </CardHeader>
                 <CardContent>
-                    <form action={signup} className="grid gap-4">
+                    <form action={async (formData) => {
+                        "use server"
+                        await signup(formData)
+                    }} className="grid gap-4">
                         <div className="grid gap-2">
                             <Label htmlFor="fullName">Full Name</Label>
                             <Input id="fullName" name="fullName" placeholder="John Doe" required />

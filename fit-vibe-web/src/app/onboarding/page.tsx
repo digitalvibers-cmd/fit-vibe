@@ -33,7 +33,7 @@ export default function OnboardingWizard() {
     const [currentStep, setCurrentStep] = useState(0)
     const [formData, setFormData] = useState({
         goal: '',
-        gender: 'male',
+        gender: 'male' as 'male' | 'female' | 'other',
         age: 25,
         height: 175,
         currentWeight: 75,

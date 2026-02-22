@@ -17,7 +17,10 @@ export default function LoginPage() {
                     </CardDescription>
                 </CardHeader>
                 <CardContent>
-                    <form action={login} className="grid gap-4">
+                    <form action={async (formData) => {
+                        "use server"
+                        await login(formData)
+                    }} className="grid gap-4">
                         <div className="grid gap-2">
                             <Label htmlFor="email">Email</Label>
                             <Input id="email" name="email" type="email" placeholder="m@example.com" required />
