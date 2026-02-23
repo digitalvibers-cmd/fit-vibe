@@ -31,7 +31,7 @@ export default async function ProfilePage() {
                             <ChevronLeft className="w-6 h-6" />
                         </Button>
                     </Link>
-                    <h1 className="text-xl font-bold">Edit Profile</h1>
+                    <h1 className="text-xl font-bold">Podešavanja Profila</h1>
                 </div>
             </div>
 
@@ -40,7 +40,7 @@ export default async function ProfilePage() {
                     <div className="w-24 h-24 bg-primary/10 rounded-full flex items-center justify-center text-primary text-3xl font-bold mb-4">
                         {profile.display_name?.[0] || 'U'}
                     </div>
-                    <p className="text-muted-foreground text-sm">Tap to change avatar (Coming soon)</p>
+                    <p className="text-muted-foreground text-sm">Dodirni da promeniš avatar (Uskoro)</p>
                 </div>
 
                 <ProfileForm profile={profile} />
@@ -48,7 +48,7 @@ export default async function ProfilePage() {
                 <div className="mt-12 pt-8 border-t">
                     <form action={signOut}>
                         <Button variant="destructive" className="w-full" type="submit">
-                            Sign Out
+                            Odjavi se
                         </Button>
                     </form>
                 </div>

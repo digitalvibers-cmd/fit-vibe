@@ -16,9 +16,9 @@ export default function LoginPage() {
         <div className="flex min-h-screen items-center justify-center bg-gray-50 px-4 py-12 dark:bg-gray-900 sm:px-6 lg:px-8">
             <Card className="w-full max-w-sm">
                 <CardHeader>
-                    <CardTitle className="text-2xl">Sign in</CardTitle>
+                    <CardTitle className="text-2xl">Prijava</CardTitle>
                     <CardDescription>
-                        Enter your email below to login to your account
+                        Upiši svoj email ispod kako bi se prijavio/la
                     </CardDescription>
                 </CardHeader>
                 <CardContent>
@@ -33,17 +33,17 @@ export default function LoginPage() {
                             <Input id="email" name="email" type="email" placeholder="m@example.com" required />
                         </div>
                         <div className="grid gap-2">
-                            <Label htmlFor="password">Password</Label>
+                            <Label htmlFor="password">Lozinka</Label>
                             <Input id="password" name="password" type="password" required />
                         </div>
                         <Button className="w-full" type="submit" disabled={isPending}>
-                            {isPending ? 'Signing in...' : 'Sign in'}
+                            {isPending ? 'Prijavljivanje...' : 'Prijavi se'}
                         </Button>
                     </form>
                     <div className="mt-4 text-center text-sm">
-                        Don&apos;t have an account?{" "}
+                        Nemaš nalog?{" "}
                         <Link href="/register" className="underline">
-                            Sign up
+                            Registruj se
                         </Link>
                     </div>
                 </CardContent>

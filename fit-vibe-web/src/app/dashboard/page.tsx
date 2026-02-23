@@ -50,7 +50,32 @@ export default async function DashboardPage() {
         .limit(1)
         .maybeSingle()
 
-    const goal = goalData || { target_weight: profile.preferences?.target_weight || 70, current_weight: profile.preferences?.currentWeight || 75 }
+    // Fetch latest weight
+    const { data: logs } = await supabase
+        .from('weight_logs')
+        .select('weight')
+        .eq('user_id', user.id)
+        .order('date', { ascending: false })
+        .limit(1)
+
+    const latestWeight = logs && logs.length > 0 ? logs[0].weight : (profile.weight || 75)
+
+    let startWeight = goalData?.current_weight || latestWeight;
+    let targetWeight = goalData?.target_weight || latestWeight;
+    let currentWeight = latestWeight;
+    let progress = 0;
+
+    if (startWeight && targetWeight) {
+        const totalDiff = Math.abs(startWeight - targetWeight);
+        const currentDiff = Math.abs(currentWeight - targetWeight);
+
+        if (totalDiff === 0 || currentWeight === targetWeight) {
+            progress = 100;
+        } else {
+            progress = 100 - (currentDiff / totalDiff) * 100;
+            progress = Math.max(0, Math.min(100, Math.round(progress)));
+        }
+    }
 
     // Parse preferences
     const prefs = profile.preferences || {}
@@ -65,7 +90,7 @@ export default async function DashboardPage() {
     const todayMeal = latestMealPlan?.days?.find((d: any) => d.day === 1) || latestMealPlan?.days?.[0] || null
 
     // Calculate BMI
-    const bmi = calculateBMI(Number(goal.current_weight), profile.height)
+    const bmi = calculateBMI(Number(currentWeight), profile.height)
     const bmiCategory = getBMICategory(Number(bmi))
 
     return (
@@ -76,8 +101,8 @@ export default async function DashboardPage() {
                 <div className="max-w-md mx-auto">
                     <div className="flex justify-between items-start mb-6">
                         <div>
-                            <h2 className="text-muted-foreground text-sm font-medium uppercase tracking-wider">Dashboard</h2>
-                            <h1 className="text-3xl font-bold mt-1">Hello, {profile.display_name?.split(' ')[0] || 'User'}!</h1>
+                            <h2 className="text-muted-foreground text-sm font-medium uppercase tracking-wider">Kontrolna tabla</h2>
+                            <h1 className="text-3xl font-bold mt-1">Zdravo, {profile.display_name?.split(' ')[0] || 'Korisniče'}!</h1>
                         </div>
                         <Link href="/profile">
                             <div className="bg-white p-2 rounded-full shadow-sm">
@@ -89,36 +114,42 @@ export default async function DashboardPage() {
                     </div>
 
                     {/* Main Stats Card (Weight Goal) */}
-                    <Card className="border-0 shadow-lg bg-primary text-primary-foreground overflow-hidden relative">
-                        <div className="absolute top-0 right-0 p-3 opacity-10">
-                            <Activity className="w-32 h-32" />
-                        </div>
-                        <CardContent className="p-6 relative z-10">
-                            <div className="flex justify-between items-end mb-4">
-                                <div>
-                                    <p className="text-primary-foreground/80 font-medium mb-1">Current Weight</p>
-                                    <h3 className="text-5xl font-bold tracking-tight">{goal.current_weight}<span className="text-2xl ml-1 font-normal opacity-80">kg</span></h3>
-                                </div>
-                                <div className="text-right">
-                                    <p className="text-primary-foreground/80 font-medium mb-1">Target</p>
-                                    <h3 className="text-3xl font-bold">{goal.target_weight}<span className="text-lg ml-1 font-normal opacity-80">kg</span></h3>
-                                </div>
+                    <Link href="/goals" className="block cursor-pointer">
+                        <Card className="border-0 shadow-lg bg-primary text-primary-foreground overflow-hidden relative hover:scale-[1.02] transition-transform">
+                            <div className="absolute top-0 right-0 p-3 opacity-10">
+                                <Activity className="w-32 h-32" />
                             </div>
+                            <CardContent className="p-6 relative z-10">
+                                <div className="flex justify-between items-end mb-4">
+                                    <div>
+                                        <p className="text-primary-foreground/80 font-medium mb-1">Trenutna težina</p>
+                                        <h3 className="text-5xl font-bold tracking-tight">{currentWeight}<span className="text-2xl ml-1 font-normal opacity-80">kg</span></h3>
+                                    </div>
+                                    <div className="text-right">
+                                        <p className="text-primary-foreground/80 font-medium mb-1">Cilj</p>
+                                        <h3 className="text-3xl font-bold">{targetWeight}<span className="text-lg ml-1 font-normal opacity-80">kg</span></h3>
+                                    </div>
+                                </div>
 
-                            <div className="space-y-2">
-                                <div className="flex justify-between text-sm font-medium opacity-90">
-                                    <span>Progress</span>
-                                    <span>To Go: {(Number(goal.current_weight) - Number(goal.target_weight)).toFixed(1)} kg</span>
+                                <div className="space-y-2">
+                                    <div className="flex justify-between text-sm font-medium opacity-90">
+                                        <span>Progres</span>
+                                        {goalData ? (
+                                            <span>Ostalo: {Math.abs(Number(currentWeight) - Number(targetWeight)).toFixed(1)} kg</span>
+                                        ) : (
+                                            <span>Podesi cilj</span>
+                                        )}
+                                    </div>
+                                    <div className="h-3 bg-black/20 rounded-full overflow-hidden">
+                                        <div
+                                            className="h-full bg-white rounded-full transition-all duration-1000"
+                                            style={{ width: `${progress}%` }}
+                                        />
+                                    </div>
                                 </div>
-                                <div className="h-3 bg-black/20 rounded-full overflow-hidden">
-                                    <div
-                                        className="h-full bg-white rounded-full"
-                                        style={{ width: '45%' }}
-                                    />
-                                </div>
-                            </div>
-                        </CardContent>
-                    </Card>
+                            </CardContent>
+                        </Card>
+                    </Link>
                 </div>
             </div>
 
@@ -133,7 +164,7 @@ export default async function DashboardPage() {
                             </div>
                             <div>
                                 <h4 className="text-2xl font-bold">{bmi}</h4>
-                                <p className="text-xs text-muted-foreground font-medium uppercase">{bmiCategory}</p>
+                                <p className="text-xs text-muted-foreground font-medium uppercase">{bmiCategory === 'Underweight' ? 'Neuhranjenost' : bmiCategory === 'Normal weight' ? 'Normalna težina' : bmiCategory === 'Overweight' ? 'Prekomerna težina' : 'Gojaznost'}</p>
                             </div>
                         </CardContent>
                     </Card>
@@ -145,7 +176,7 @@ export default async function DashboardPage() {
                             </div>
                             <div>
                                 <h4 className="text-2xl font-bold">{commitment}x</h4>
-                                <p className="text-xs text-muted-foreground font-medium uppercase">Workouts/Week</p>
+                                <p className="text-xs text-muted-foreground font-medium uppercase">Treninga Nedeljno</p>
                             </div>
                         </CardContent>
                     </Card>
@@ -154,9 +185,9 @@ export default async function DashboardPage() {
                 {/* Todays Plan Section */}
                 <div>
                     <div className="flex justify-between items-center mb-4">
-                        <h3 className="text-lg font-bold">Today's Plan</h3>
+                        <h3 className="text-lg font-bold">Današnji Plan</h3>
                         <Link href="/meals">
-                            <Button variant="ghost" size="sm" className="text-primary">View Calendar</Button>
+                            <Button variant="ghost" size="sm" className="text-primary">Vidi Kalendar</Button>
                         </Link>
                     </div>
 
@@ -170,9 +201,9 @@ export default async function DashboardPage() {
                                                 <Activity className="w-6 h-6" />
                                             </div>
                                             <div className="flex-1">
-                                                <h4 className="font-bold">{todayWorkout.isRestDay ? 'Rest Day' : (todayWorkout.title || 'Workout')}</h4>
+                                                <h4 className="font-bold">{todayWorkout.isRestDay ? 'Dan za odmor' : (todayWorkout.title || 'Trening')}</h4>
                                                 <p className="text-sm text-muted-foreground">
-                                                    {todayWorkout.isRestDay ? 'Active Recovery' : `${todayWorkout.duration || ''} • ${todayWorkout.exercises?.length || 0} Exercises`}
+                                                    {todayWorkout.isRestDay ? 'Aktivni oporavak' : `${todayWorkout.duration || ''} • ${todayWorkout.exercises?.length || 0} Vežbi`}
                                                 </p>
                                             </div>
                                             <div className="h-10 w-10 rounded-full flex items-center justify-center hover:bg-accent hover:text-accent-foreground">
@@ -191,9 +222,9 @@ export default async function DashboardPage() {
                                                 <Utensils className="w-6 h-6" />
                                             </div>
                                             <div className="flex-1">
-                                                <h4 className="font-bold">{todayMeal.total_calories} kcal Target</h4>
+                                                <h4 className="font-bold">{todayMeal.total_calories} kcal Cilj</h4>
                                                 <p className="text-sm text-muted-foreground">
-                                                    {todayMeal.meals?.length || 0} Meals • {todayMeal.macros?.protein || '-'} Protein
+                                                    {todayMeal.meals?.length || 0} Obroka • {todayMeal.macros?.protein || '-'} Proteina
                                                 </p>
                                             </div>
                                             <div className="h-10 w-10 rounded-full flex items-center justify-center hover:bg-accent hover:text-accent-foreground">
@@ -210,8 +241,8 @@ export default async function DashboardPage() {
                             <CardContent className="p-6 relative overflow-hidden">
                                 <div className="relative z-10 space-y-4">
                                     <div>
-                                        <h3 className="text-lg font-bold mb-1">AI Coach is ready</h3>
-                                        <p className="text-gray-300 text-sm">Generate your personalized workout & meal plan based on your assessment.</p>
+                                        <h3 className="text-lg font-bold mb-1">AI Trener je spreman</h3>
+                                        <p className="text-gray-300 text-sm">Kreiraj personalizovan plan ishrane i treninga na osnovu tvojih ciljeva.</p>
                                     </div>
                                     <GeneratePlanButton />
                                 </div>

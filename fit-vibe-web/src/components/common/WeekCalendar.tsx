@@ -19,7 +19,7 @@ export default function WeekCalendar({ dateString }: WeekCalendarProps) {
     // Ensure we handle timezone correctly (simple date part)
     const date = dateString ? new Date(dateString) : new Date();
     const weekDays = getWeekDays(date)
-    const currentMonth = date.toLocaleString('default', { month: 'long' })
+    const currentMonth = date.toLocaleString('sr-RS', { month: 'long' })
     const currentYear = date.getFullYear()
 
     // Navigation logic for Previous/Next week
@@ -71,7 +71,7 @@ export default function WeekCalendar({ dateString }: WeekCalendarProps) {
                                 href={`${pathname}?${createQueryString(formatDate(day))}`}
                                 className={`flex flex-col items-center gap-1 ${isSelected ? 'bg-primary text-primary-foreground shadow-md' : 'text-muted-foreground'} px-3 py-3 rounded-2xl transition-all hover:bg-primary/10`}
                             >
-                                <span className="text-xs font-semibold uppercase">{day.toLocaleDateString('en-US', { weekday: 'narrow' })}</span>
+                                <span className="text-xs font-semibold uppercase">{day.toLocaleDateString('sr-RS', { weekday: 'short' }).replace('.', '')}</span>
                                 <span className={`text-lg font-bold ${isSelected ? '' : 'text-foreground'}`}>{day.getDate()}</span>
                                 {/* Dot indicator - Mocking for Mon/Wed/Fri logic from generic design or just static */}
                                 {/* Keeping it generic for now or removing, as data is not seemingly bound to dates yet */}

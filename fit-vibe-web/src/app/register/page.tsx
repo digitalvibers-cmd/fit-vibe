@@ -17,9 +17,9 @@ export default function RegisterPage() {
         <div className="flex min-h-screen items-center justify-center bg-gray-50 px-4 py-12 dark:bg-gray-900 sm:px-6 lg:px-8">
             <Card className="w-full max-w-sm">
                 <CardHeader>
-                    <CardTitle className="text-2xl">Sign Up</CardTitle>
+                    <CardTitle className="text-2xl">Registracija</CardTitle>
                     <CardDescription>
-                        Enter your information to create an account
+                        Unesi svoje podatke za kreiranje naloga
                     </CardDescription>
                 </CardHeader>
                 <CardContent>
@@ -30,25 +30,25 @@ export default function RegisterPage() {
                             </div>
                         )}
                         <div className="grid gap-2">
-                            <Label htmlFor="fullName">Full Name</Label>
-                            <Input id="fullName" name="fullName" placeholder="John Doe" required />
+                            <Label htmlFor="fullName">Ime i prezime</Label>
+                            <Input id="fullName" name="fullName" placeholder="Petar Petrović" required />
                         </div>
                         <div className="grid gap-2">
                             <Label htmlFor="email">Email</Label>
                             <Input id="email" name="email" type="email" placeholder="m@example.com" required />
                         </div>
                         <div className="grid gap-2">
-                            <Label htmlFor="password">Password</Label>
+                            <Label htmlFor="password">Lozinka</Label>
                             <Input id="password" name="password" type="password" required />
                         </div>
                         <Button className="w-full" type="submit" disabled={isPending}>
-                            {isPending ? 'Signing up...' : 'Create an account'}
+                            {isPending ? 'Kreiranje...' : 'Kreiraj nalog'}
                         </Button>
                     </form>
                     <div className="mt-4 text-center text-sm">
-                        Already have an account?{" "}
+                        Već imaš nalog?{" "}
                         <Link href="/login" className="underline">
-                            Sign in
+                            Prijavi se
                         </Link>
                     </div>
                 </CardContent>

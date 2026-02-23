@@ -14,13 +14,13 @@ export default function BottomNav() {
     }
 
     const navItems = [
-        { href: '/dashboard', label: 'Home', icon: Home },
-        { href: '/workout', label: 'Workout', icon: Dumbbell },
-        { href: '/meals', label: 'Meals', icon: Utensils },
-        { href: '/goals', label: 'Progress', icon: Target }, // Changed Profile to Progress/Goals as per plan implies goal tracking
+        { href: '/dashboard', label: 'Početna', icon: Home },
+        { href: '/workout', label: 'Trening', icon: Dumbbell },
+        { href: '/meals', label: 'Ishrana', icon: Utensils },
+        { href: '/goals', label: 'Progres', icon: Target }, // Changed Profile to Progress/Goals as per plan implies goal tracking
         // Profile will be accessible via Avatar in dashboard for now, or we can add it here.
         // Plan said: "Profile/Goals (User/Target)". Let's use User icon for Profile page which will have goals.
-        { href: '/profile', label: 'Profile', icon: User },
+        { href: '/profile', label: 'Profil', icon: User },
     ]
 
     return (

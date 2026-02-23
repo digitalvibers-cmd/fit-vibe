@@ -27,7 +27,7 @@ export default function ProfileForm({ profile }: { profile: any }) {
         <form action={formAction} className="space-y-6">
             <div className="grid gap-4">
                 <div className="space-y-2">
-                    <Label htmlFor="display_name">Display Name</Label>
+                    <Label htmlFor="display_name">Ime</Label>
                     <Input
                         id="display_name"
                         name="display_name"
@@ -38,7 +38,7 @@ export default function ProfileForm({ profile }: { profile: any }) {
 
                 <div className="grid grid-cols-2 gap-4">
                     <div className="space-y-2">
-                        <Label htmlFor="age">Age</Label>
+                        <Label htmlFor="age">Godine</Label>
                         <Input
                             id="age"
                             name="age"
@@ -48,7 +48,7 @@ export default function ProfileForm({ profile }: { profile: any }) {
                         />
                     </div>
                     <div className="space-y-2">
-                        <Label htmlFor="height">Height (cm)</Label>
+                        <Label htmlFor="height">Visina (cm)</Label>
                         <Input
                             id="height"
                             name="height"
@@ -60,90 +60,90 @@ export default function ProfileForm({ profile }: { profile: any }) {
                 </div>
 
                 <div className="space-y-2">
-                    <Label htmlFor="gender">Gender</Label>
+                    <Label htmlFor="gender">Pol</Label>
                     <select
                         id="gender"
                         name="gender"
                         defaultValue={profile.gender || ''}
                         className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                     >
-                        <option value="male">Male</option>
-                        <option value="female">Female</option>
-                        <option value="other">Other</option>
+                        <option value="male">Muški</option>
+                        <option value="female">Ženski</option>
+                        <option value="other">Drugo</option>
                     </select>
                 </div>
 
                 <div className="space-y-2">
-                    <Label htmlFor="goal">Primary Goal</Label>
+                    <Label htmlFor="goal">Glavni cilj</Label>
                     <select
                         id="goal"
                         name="goal"
                         defaultValue={profile.preferences?.goal || ''}
                         className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                     >
-                        <option value="Lose Weight">Lose Weight</option>
-                        <option value="Build Muscle">Build Muscle</option>
-                        <option value="Keep Fit">Keep Fit</option>
+                        <option value="Lose Weight">Smršati</option>
+                        <option value="Build Muscle">Povećati mišićnu masu</option>
+                        <option value="Keep Fit">Održati formu</option>
                     </select>
                 </div>
                 <div className="space-y-2">
-                    <Label htmlFor="activityLevel">Activity Level</Label>
+                    <Label htmlFor="activityLevel">Nivo aktivnosti</Label>
                     <select
                         id="activityLevel"
                         name="activityLevel"
                         defaultValue={profile.preferences?.activityLevel || ''}
                         className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                     >
-                        <option value="Sedentary">Sedentary</option>
-                        <option value="Lightly Active">Lightly Active</option>
-                        <option value="Moderately Active">Moderately Active</option>
-                        <option value="Very Active">Very Active</option>
+                        <option value="Sedentary">Sedentarno</option>
+                        <option value="Lightly Active">Slabo aktivno</option>
+                        <option value="Moderately Active">Umereno aktivno</option>
+                        <option value="Very Active">Veoma aktivno</option>
                     </select>
                 </div>
             </div>
 
             <div className="space-y-2">
-                <Label htmlFor="trainingLocation">Training Location</Label>
+                <Label htmlFor="trainingLocation">Mesto treniranja</Label>
                 <select
                     id="trainingLocation"
                     name="trainingLocation"
                     defaultValue={profile.preferences?.trainingLocation || ''}
                     className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                 >
-                    <option value="gym">Gym</option>
-                    <option value="home">Home</option>
+                    <option value="gym">Teretana</option>
+                    <option value="home">Kod kuće</option>
                 </select>
             </div>
 
             <div className="space-y-2">
-                <Label htmlFor="trainingEquipment">Training Equipment (comma separated)</Label>
+                <Label htmlFor="trainingEquipment">Oprema (lista odvojena zarezima)</Label>
                 <Input
                     id="trainingEquipment"
                     name="trainingEquipment"
                     defaultValue={profile.preferences?.trainingEquipment?.join(', ') || ''}
-                    placeholder="e.g. Dumbbells, Bands"
+                    placeholder="npr. Bučice, Trake"
                 />
             </div>
 
             <div className="space-y-2">
-                <Label htmlFor="aiInput">Additional AI Instructions</Label>
+                <Label htmlFor="aiInput">Dodatne informacije za UI Trenera</Label>
                 <Input
                     id="aiInput"
                     name="aiInput"
                     defaultValue={profile.preferences?.aiInput || ''}
-                    placeholder="e.g. I have bad knees"
+                    placeholder="npr. Bole me kolena"
                 />
             </div>
 
             {state?.error && (
-                <p className="text-sm text-red-500">{typeof state.error === 'string' ? state.error : 'Invalid input'}</p>
+                <p className="text-sm text-red-500">{typeof state.error === 'string' ? state.error : 'Neispravan unos'}</p>
             )}
             {state?.success && (
-                <p className="text-sm text-green-500">{state.message}</p>
+                <p className="text-sm text-green-500">{state.message === "Profile updated successfully" ? "Profil uspešno sačuvan" : state.message}</p>
             )}
 
             <Button type="submit" className="w-full" disabled={isPending}>
-                {isPending ? <Loader2 className="animate-spin" /> : 'Save Changes'}
+                {isPending ? <Loader2 className="animate-spin" /> : 'Sačuvaj izmene'}
             </Button>
         </form>
     )

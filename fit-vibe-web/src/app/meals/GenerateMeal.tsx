@@ -18,10 +18,10 @@ export default function GenerateMeal() {
             if (res?.error) {
                 toast.error(res.error)
             } else {
-                toast.success('Meal plan generated successfully!')
+                toast.success('Plan ishrane je uspešno generisan!')
             }
         } catch (error) {
-            toast.error('Failed to generate plan.')
+            toast.error('Greška pri generisanju plana.')
         } finally {
             setIsGenerating(false)
         }
@@ -34,12 +34,12 @@ export default function GenerateMeal() {
             </div>
 
             <div>
-                <h3 className="text-xl font-bold text-foreground mb-2">No Active Meal Plan</h3>
-                <p className="text-sm">Let our AI build a personalized meal plan based on your goals, diet, and preferences.</p>
+                <h3 className="text-xl font-bold text-foreground mb-2">Nema aktivnog plana</h3>
+                <p className="text-sm">Dozvoli našem AI asistentu da kreira personalizovan plan ishrane zasnovan na tvojim ciljevima.</p>
             </div>
 
             <div className="space-y-3 bg-secondary/30 p-4 rounded-2xl">
-                <p className="text-sm font-semibold text-foreground">Select Plan Duration</p>
+                <p className="text-sm font-semibold text-foreground">Izaberi dužinu plana</p>
                 <div className="flex justify-center gap-2">
                     {[7, 14, 21, 30].map(days => (
                         <button
@@ -64,7 +64,7 @@ export default function GenerateMeal() {
                 className="w-full rounded-full font-bold h-12 text-md shadow-lg transition-all"
                 size="lg"
             >
-                {isGenerating ? <><Loader2 className="w-5 h-5 mr-2 animate-spin" /> Crafting your meals...</> : 'Generate AI Plan'}
+                {isGenerating ? <><Loader2 className="w-5 h-5 mr-2 animate-spin" /> Pravim tvoj plan...</> : 'Generiši AI Plan'}
             </Button>
         </div>
     )

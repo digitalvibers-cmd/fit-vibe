@@ -68,25 +68,25 @@ export default async function MealsPage(props: { searchParams: Promise<{ [key: s
                     <>
                         <div className="flex justify-between items-center mb-2">
                             <div className="text-sm font-bold text-muted-foreground uppercase tracking-wider">
-                                Day {targetMealDay} of {latestPlan.durationInDays}
+                                Dan {targetMealDay} od {latestPlan.durationInDays}
                             </div>
                             <div className="bg-primary/10 text-primary text-xs font-bold px-3 py-1 rounded-full">
-                                Active Plan
+                                Aktivni plan
                             </div>
                         </div>
 
                         {/* Stats Summary */}
                         <div className="grid grid-cols-3 gap-4 text-center">
                             <div className="bg-card p-3 rounded-2xl border shadow-sm flex flex-col items-center justify-center">
-                                <p className="text-xs text-muted-foreground mb-1">Calories</p>
+                                <p className="text-xs text-muted-foreground mb-1">Kalorije</p>
                                 <p className="font-bold text-lg">{currentDayMeal.total_calories || '-'}</p>
                             </div>
                             <div className="bg-card p-3 rounded-2xl border shadow-sm flex flex-col items-center justify-center">
-                                <p className="text-xs text-muted-foreground mb-1">Protein</p>
+                                <p className="text-xs text-muted-foreground mb-1">Proteini</p>
                                 <p className="font-bold text-lg">{currentDayMeal.macros?.protein || '-'}</p>
                             </div>
                             <div className="bg-card p-3 rounded-2xl border shadow-sm flex flex-col items-center justify-center">
-                                <p className="text-xs text-muted-foreground mb-1">Carbs</p>
+                                <p className="text-xs text-muted-foreground mb-1">Ugljeni hidrati</p>
                                 <p className="font-bold text-lg">{currentDayMeal.macros?.carbs || '-'}</p>
                             </div>
                         </div>
@@ -94,9 +94,9 @@ export default async function MealsPage(props: { searchParams: Promise<{ [key: s
                         {/* Meal List */}
                         <div className="space-y-4 pt-4">
                             <div className="flex justify-between items-center">
-                                <h2 className="text-lg font-bold">Today's Meals</h2>
+                                <h2 className="text-lg font-bold">Današnji obroci</h2>
                                 <Button size="sm" variant="outline" className="rounded-full gap-2 hover:bg-primary/5 hover:text-primary transition-colors">
-                                    <Plus className="w-4 h-4" /> Add Meal
+                                    <Plus className="w-4 h-4" /> Dodaj obrok
                                 </Button>
                             </div>
 

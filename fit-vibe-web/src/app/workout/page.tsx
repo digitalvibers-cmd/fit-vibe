@@ -70,17 +70,17 @@ export default async function WorkoutPage(props: { searchParams: Promise<{ [key:
                         <div className="bg-card rounded-3xl p-6 shadow-sm border">
                             <div className="flex justify-between items-center mb-6 border-b pb-4">
                                 <div className="text-sm font-bold text-muted-foreground uppercase tracking-wider">
-                                    Day {targetWorkoutDay} of {latestPlan.durationInDays}
+                                    Dan {targetWorkoutDay} od {latestPlan.durationInDays}
                                 </div>
                                 <div className="bg-primary/10 text-primary text-xs font-bold px-3 py-1 rounded-full">
-                                    Active Plan
+                                    Aktivni plan
                                 </div>
                             </div>
 
                             {currentWorkout.isRestDay ? (
                                 <div className="text-center py-6">
-                                    <h2 className="text-2xl font-bold mb-2">Rest Day Active Recovery</h2>
-                                    <p className="text-muted-foreground text-sm max-w-[250px] mx-auto">Take it easy today. Focus on mobility, light walking, or complete rest to prepare for tomorrow.</p>
+                                    <h2 className="text-2xl font-bold mb-2">Dan za odmor - Aktivni oporavak</h2>
+                                    <p className="text-muted-foreground text-sm max-w-[250px] mx-auto">Danas odmaraj. Fokusiraj se na istezanje, laganu šetnju ili potpuni odmor kako bi se pripremio/la za sutra.</p>
                                 </div>
                             ) : (
                                 <>
@@ -89,7 +89,7 @@ export default async function WorkoutPage(props: { searchParams: Promise<{ [key:
                                             <h2 className="text-2xl font-bold mb-1">{currentWorkout.title}</h2>
                                             <div className="flex items-center gap-3 text-sm text-muted-foreground">
                                                 <span className="flex items-center gap-1"><Timer className="w-4 h-4" /> {currentWorkout.duration}</span>
-                                                <span className="flex items-center gap-1"><Dumbbell className="w-4 h-4" /> {currentWorkout.exercises?.length || 0} Exercises</span>
+                                                <span className="flex items-center gap-1"><Dumbbell className="w-4 h-4" /> {currentWorkout.exercises?.length || 0} Vežbi</span>
                                             </div>
                                         </div>
                                         <div className="bg-primary/10 p-3 rounded-full text-primary">
@@ -100,20 +100,20 @@ export default async function WorkoutPage(props: { searchParams: Promise<{ [key:
                                     <div className="space-y-4">
                                         {currentWorkout.warmup && (
                                             <div className="bg-secondary/50 p-3 rounded-xl border">
-                                                <span className="text-xs font-bold uppercase text-muted-foreground mb-1 block">Warmup</span>
+                                                <span className="text-xs font-bold uppercase text-muted-foreground mb-1 block">Zagrevanje</span>
                                                 <p className="text-sm font-medium">{currentWorkout.warmup}</p>
                                             </div>
                                         )}
                                         {currentWorkout.cooldown && (
                                             <div className="bg-blue-50 p-3 rounded-xl text-blue-700 border border-blue-100">
-                                                <span className="text-xs font-bold uppercase opacity-70 mb-1 block">Cooldown</span>
+                                                <span className="text-xs font-bold uppercase opacity-70 mb-1 block">Istezanje</span>
                                                 <p className="text-sm font-medium">{currentWorkout.cooldown}</p>
                                             </div>
                                         )}
                                     </div>
 
                                     <Button className="w-full mt-6 rounded-full font-bold h-12 text-md shadow-lg transition-all" size="lg">
-                                        Start Workout
+                                        Započni trening
                                     </Button>
                                 </>
                             )}
@@ -122,7 +122,7 @@ export default async function WorkoutPage(props: { searchParams: Promise<{ [key:
                         {/* Exercises List */}
                         {!currentWorkout.isRestDay && currentWorkout.exercises?.length > 0 && (
                             <>
-                                <h3 className="text-lg font-bold">Exercises</h3>
+                                <h3 className="text-lg font-bold">Vežbe</h3>
                                 <div className="space-y-3">
                                     {currentWorkout.exercises.map((exercise: any, index: number) => (
                                         <Card key={index} className="border shadow-sm rounded-2xl overflow-hidden hover:shadow-md transition-shadow">
@@ -134,10 +134,10 @@ export default async function WorkoutPage(props: { searchParams: Promise<{ [key:
                                                     <h4 className="font-bold">{exercise.name}</h4>
                                                     <div className="flex items-center gap-2 mt-1">
                                                         <span className="text-xs font-bold bg-primary/10 text-primary px-2 py-0.5 rounded-full">
-                                                            {exercise.sets} Sets
+                                                            {exercise.sets} Serija
                                                         </span>
                                                         <span className="text-xs font-bold bg-secondary/80 text-secondary-foreground px-2 py-0.5 rounded-full">
-                                                            {exercise.reps} Reps
+                                                            {exercise.reps} Ponavljanja
                                                         </span>
                                                     </div>
                                                     {exercise.notes && (

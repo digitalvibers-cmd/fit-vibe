@@ -13,21 +13,21 @@ import { cn } from "@/lib/utils"
 import { ChevronRight, ChevronLeft, Check, Upload, Mic } from 'lucide-react'
 
 const STEPS = [
-    { id: 'goal', title: 'What is your fitness goal?' },
-    { id: 'gender', title: 'What is your gender?' },
-    { id: 'age', title: 'What is your age?' },
-    { id: 'height', title: 'What is your height?' },
-    { id: 'weight', title: 'What is your weight?' },
-    { id: 'experience', title: 'What is your fitness experience?' },
-    { id: 'injuries', title: 'Do you have any injuries?' },
-    { id: 'diet', title: 'Do you assume a specific diet?' },
-    { id: 'commitment', title: 'How many days/week will you commit?' },
-    { id: 'training_location', title: 'Where do you prefer to train?' },
-    { id: 'training_equipment', title: 'What equipment do you have available?' },
-    { id: 'supplements', title: 'Do you take any supplements?' },
-    { id: 'sleep', title: 'How is your sleep quality?' },
-    { id: 'photo', title: 'Body Analysis (Optional)' },
-    { id: 'ai_input', title: 'Anything else for your AI Coach?' },
+    { id: 'goal', title: 'Koji je tvoj fitnes cilj?' },
+    { id: 'gender', title: 'Kog ste pola?' },
+    { id: 'age', title: 'Koliko imate godina?' },
+    { id: 'height', title: 'Koliko ste visoki?' },
+    { id: 'weight', title: 'Kolika je vaša trenutna težina?' },
+    { id: 'experience', title: 'Kakvo je vaše fitnes iskustvo?' },
+    { id: 'injuries', title: 'Imate li neke povrede?' },
+    { id: 'diet', title: 'Da li pratite poseban režim ishrane?' },
+    { id: 'commitment', title: 'Koliko dana nedeljno planirate da trenirate?' },
+    { id: 'training_location', title: 'Gde preferirate da trenirate?' },
+    { id: 'training_equipment', title: 'Koju opremu imate na raspolaganju?' },
+    { id: 'supplements', title: 'Da li koristite suplemente?' },
+    { id: 'sleep', title: 'Kakav vam je kvalitet sna?' },
+    { id: 'photo', title: 'Analiza tela (Opciono)' },
+    { id: 'ai_input', title: 'Još nešto za vašeg AI trenera?' },
 ]
 
 export default function OnboardingWizard() {
@@ -73,12 +73,12 @@ export default function OnboardingWizard() {
             // Submit
             try {
                 toast.promise(submitOnboarding(formData), {
-                    loading: 'Creating your personalized plan...',
-                    success: 'Welcome to Fit Vibe!',
-                    error: 'Failed to create profile.'
+                    loading: 'Kreiramo tvoj personalizovani plan...',
+                    success: 'Dobrodošli u Fit Vibe!',
+                    error: 'Greška pri kreiranju profila.'
                 })
             } catch (error) {
-                toast.error("Something went wrong.")
+                toast.error("Došlo je do greške.")
             }
         }
     }
@@ -114,8 +114,8 @@ export default function OnboardingWizard() {
             {/* Progress Bar */}
             <div className="w-full max-w-md mb-8 space-y-2">
                 <div className="flex justify-between text-sm font-medium text-muted-foreground">
-                    <span>Assessment</span>
-                    <span>{currentStep + 1} of {totalSteps}</span>
+                    <span>Upitnik</span>
+                    <span>{currentStep + 1} od {totalSteps}</span>
                 </div>
                 <div className="h-2 bg-secondary rounded-full overflow-hidden">
                     <motion.div
@@ -150,19 +150,24 @@ export default function OnboardingWizard() {
                                 {/* 1. GOAL */}
                                 {currentStep === 0 && (
                                     <div className="space-y-3">
-                                        {['Lose weight', 'Gain muscle', 'Endurance', 'Keep fit'].map((g) => (
+                                        {[
+                                            { label: 'Smršati', value: 'Lose weight' },
+                                            { label: 'Povećati mišićnu masu', value: 'Gain muscle' },
+                                            { label: 'Poboljšati kondiciju', value: 'Endurance' },
+                                            { label: 'Održati formu', value: 'Keep fit' }
+                                        ].map((g) => (
                                             <button
-                                                key={g}
-                                                onClick={() => updateField('goal', g)}
+                                                key={g.value}
+                                                onClick={() => updateField('goal', g.value)}
                                                 className={cn(
                                                     "w-full p-4 rounded-2xl border-2 text-left font-semibold transition-all flex justify-between items-center",
-                                                    formData.goal === g
+                                                    formData.goal === g.value
                                                         ? "border-primary bg-primary/10 text-primary"
                                                         : "border-border hover:border-primary/50"
                                                 )}
                                             >
-                                                {g}
-                                                {formData.goal === g && <Check className="w-5 h-5 text-primary" />}
+                                                {g.label}
+                                                {formData.goal === g.value && <Check className="w-5 h-5 text-primary" />}
                                             </button>
                                         ))}
                                     </div>
@@ -171,18 +176,21 @@ export default function OnboardingWizard() {
                                 {/* 2. GENDER */}
                                 {currentStep === 1 && (
                                     <div className="grid grid-cols-1 gap-4">
-                                        {['male', 'female'].map((g) => (
+                                        {[
+                                            { label: 'Muški', value: 'male' },
+                                            { label: 'Ženski', value: 'female' }
+                                        ].map((g) => (
                                             <button
-                                                key={g}
-                                                onClick={() => updateField('gender', g)}
+                                                key={g.value}
+                                                onClick={() => updateField('gender', g.value)}
                                                 className={cn(
                                                     "h-32 rounded-2xl border-2 flex flex-col items-center justify-center gap-2 transition-all",
-                                                    formData.gender === g
+                                                    formData.gender === g.value
                                                         ? "border-primary bg-primary/10 text-primary"
                                                         : "border-border hover:border-primary/50"
                                                 )}
                                             >
-                                                <span className="text-lg font-bold capitalize">{g}</span>
+                                                <span className="text-lg font-bold capitalize">{g.label}</span>
                                             </button>
                                         ))}
                                     </div>
@@ -227,7 +235,7 @@ export default function OnboardingWizard() {
                                 {currentStep === 4 && (
                                     <div className="space-y-8">
                                         <div className="space-y-4">
-                                            <Label className="text-center block">Current Weight</Label>
+                                            <Label className="text-center block">Trenutna težina</Label>
                                             <div className="flex justify-center items-baseline gap-1">
                                                 <span className="text-5xl font-bold text-primary">{formData.currentWeight}</span>
                                                 <span className="text-lg text-muted-foreground">kg</span>
@@ -243,7 +251,7 @@ export default function OnboardingWizard() {
                                         </div>
 
                                         <div className="space-y-4">
-                                            <Label className="text-center block">Target Weight</Label>
+                                            <Label className="text-center block">Ciljana težina</Label>
                                             <div className="flex justify-center items-baseline gap-1">
                                                 <span className="text-5xl font-bold text-primary">{formData.targetWeight}</span>
                                                 <span className="text-lg text-muted-foreground">kg</span>
@@ -263,19 +271,23 @@ export default function OnboardingWizard() {
                                 {/* 6. EXPERIENCE */}
                                 {currentStep === 5 && (
                                     <div className="space-y-3">
-                                        {['Beginner', 'Intermediate', 'Advanced'].map((e) => (
+                                        {[
+                                            { label: 'Početnik', value: 'beginner' },
+                                            { label: 'Srednje iskusni trener', value: 'intermediate' },
+                                            { label: 'Napredni trener', value: 'advanced' }
+                                        ].map((e) => (
                                             <button
-                                                key={e}
-                                                onClick={() => updateField('experience', e.toLowerCase())}
+                                                key={e.value}
+                                                onClick={() => updateField('experience', e.value)}
                                                 className={cn(
                                                     "w-full p-4 rounded-2xl border-2 text-left font-semibold transition-all flex justify-between items-center",
-                                                    formData.experience === e.toLowerCase()
+                                                    formData.experience === e.value
                                                         ? "border-primary bg-primary/10 text-primary"
                                                         : "border-border hover:border-primary/50"
                                                 )}
                                             >
-                                                {e}
-                                                {formData.experience === e.toLowerCase() && <Check className="w-5 h-5 text-primary" />}
+                                                {e.label}
+                                                {formData.experience === e.value && <Check className="w-5 h-5 text-primary" />}
                                             </button>
                                         ))}
                                     </div>
@@ -284,23 +296,28 @@ export default function OnboardingWizard() {
                                 {/* 7. INJURIES */}
                                 {currentStep === 6 && (
                                     <div className="space-y-3">
-                                        <p className="text-sm text-center text-muted-foreground mb-4">Select all that apply</p>
-                                        {['None', 'Back Pain', 'Knee Pain', 'Shoulder Pain'].map((injury) => (
+                                        <p className="text-sm text-center text-muted-foreground mb-4">Izaberite sve što se odnosi na vas</p>
+                                        {[
+                                            { label: 'Nemam povrede', value: 'none' },
+                                            { label: 'Bol u leđima', value: 'back_pain' },
+                                            { label: 'Bol u kolenima', value: 'knee_pain' },
+                                            { label: 'Bol u ramenima', value: 'shoulder_pain' }
+                                        ].map((injury) => (
                                             <button
-                                                key={injury}
+                                                key={injury.value}
                                                 onClick={() => {
-                                                    if (injury === 'None') updateField('injuries', [])
-                                                    else toggleArrayItem('injuries', injury)
+                                                    if (injury.value === 'none') updateField('injuries', [])
+                                                    else toggleArrayItem('injuries', injury.value)
                                                 }}
                                                 className={cn(
                                                     "w-full p-4 rounded-2xl border-2 text-left font-semibold transition-all flex justify-between items-center",
-                                                    (injury === 'None' && formData.injuries.length === 0) || (formData.injuries as string[]).includes(injury)
+                                                    (injury.value === 'none' && formData.injuries.length === 0) || (formData.injuries as string[]).includes(injury.value)
                                                         ? "border-primary bg-primary/10 text-primary"
                                                         : "border-border hover:border-primary/50"
                                                 )}
                                             >
-                                                {injury}
-                                                {((injury === 'None' && formData.injuries.length === 0) || (formData.injuries as string[]).includes(injury)) && <Check className="w-5 h-5 text-primary" />}
+                                                {injury.label}
+                                                {((injury.value === 'none' && formData.injuries.length === 0) || (formData.injuries as string[]).includes(injury.value)) && <Check className="w-5 h-5 text-primary" />}
                                             </button>
                                         ))}
                                     </div>
@@ -309,18 +326,23 @@ export default function OnboardingWizard() {
                                 {/* 8. DIET */}
                                 {currentStep === 7 && (
                                     <div className="grid grid-cols-2 gap-3">
-                                        {['Classic', 'Keto', 'Vegan', 'Paleo'].map((diet) => (
+                                        {[
+                                            { label: 'Klasična', value: 'classic' },
+                                            { label: 'Keto', value: 'keto' },
+                                            { label: 'Veganska', value: 'vegan' },
+                                            { label: 'Paleo', value: 'paleo' }
+                                        ].map((diet) => (
                                             <button
-                                                key={diet}
-                                                onClick={() => updateField('diet', diet.toLowerCase())}
+                                                key={diet.value}
+                                                onClick={() => updateField('diet', diet.value)}
                                                 className={cn(
                                                     "aspect-square rounded-2xl border-2 flex flex-col items-center justify-center gap-2 transition-all p-2 text-center",
-                                                    formData.diet === diet.toLowerCase()
+                                                    formData.diet === diet.value
                                                         ? "border-primary bg-primary/10 text-primary"
                                                         : "border-border hover:border-primary/50"
                                                 )}
                                             >
-                                                <span className="font-bold">{diet}</span>
+                                                <span className="font-bold">{diet.label}</span>
                                             </button>
                                         ))}
                                     </div>
@@ -332,7 +354,7 @@ export default function OnboardingWizard() {
                                         <div className="text-8xl font-bold text-primary">
                                             {formData.commitment}x
                                         </div>
-                                        <p className="text-muted-foreground">days per week</p>
+                                        <p className="text-muted-foreground">dana nedeljno</p>
                                         <input
                                             type="range"
                                             min="1"
@@ -347,18 +369,21 @@ export default function OnboardingWizard() {
                                 {/* 10. TRAINING LOCATION */}
                                 {currentStep === 9 && (
                                     <div className="grid grid-cols-2 gap-4">
-                                        {['Gym', 'Home'].map((loc) => (
+                                        {[
+                                            { label: 'Teretana', value: 'gym' },
+                                            { label: 'Kod kuće', value: 'home' }
+                                        ].map((loc) => (
                                             <button
-                                                key={loc}
-                                                onClick={() => updateField('trainingLocation', loc.toLowerCase())}
+                                                key={loc.value}
+                                                onClick={() => updateField('trainingLocation', loc.value)}
                                                 className={cn(
                                                     "h-32 rounded-2xl border-2 flex flex-col items-center justify-center gap-2 transition-all",
-                                                    formData.trainingLocation === loc.toLowerCase()
+                                                    formData.trainingLocation === loc.value
                                                         ? "border-primary bg-primary/10 text-primary"
                                                         : "border-border hover:border-primary/50"
                                                 )}
                                             >
-                                                <span className="text-lg font-bold">{loc}</span>
+                                                <span className="text-lg font-bold">{loc.label}</span>
                                             </button>
                                         ))}
                                     </div>
@@ -369,24 +394,31 @@ export default function OnboardingWizard() {
                                     <div className="space-y-4">
                                         {formData.trainingLocation === 'gym' ? (
                                             <div className="text-center space-y-4">
-                                                <p className="text-muted-foreground">Since you train at the gym, we assume you have access to standard equipment.</p>
+                                                <p className="text-muted-foreground">S obzirom da trenirate u teretani, podrazumevamo da imate pristup standardnoj opremi.</p>
                                                 <Check className="w-12 h-12 text-primary mx-auto" />
                                             </div>
                                         ) : (
                                             <>
                                                 <div className="grid grid-cols-2 gap-3">
-                                                    {['Dumbbells', 'Barbell', 'Bands', 'Kettlebell', 'Bench', 'Pull-up Bar'].map((eq) => (
+                                                    {[
+                                                        { label: 'Bučice', value: 'dumbbells' },
+                                                        { label: 'Šipka', value: 'barbell' },
+                                                        { label: 'Trake', value: 'bands' },
+                                                        { label: 'Rusko zvono', value: 'kettlebell' },
+                                                        { label: 'Klupa', value: 'bench' },
+                                                        { label: 'Vratilo', value: 'pullup_bar' }
+                                                    ].map((eq) => (
                                                         <button
-                                                            key={eq}
-                                                            onClick={() => toggleArrayItem('trainingEquipment', eq)}
+                                                            key={eq.value}
+                                                            onClick={() => toggleArrayItem('trainingEquipment', eq.value)}
                                                             className={cn(
                                                                 "h-24 rounded-2xl border-2 flex items-center justify-center p-2 text-center text-sm font-semibold transition-all",
-                                                                (formData.trainingEquipment as string[]).includes(eq)
+                                                                (formData.trainingEquipment as string[]).includes(eq.value)
                                                                     ? "border-primary bg-primary/10 text-primary"
                                                                     : "border-border hover:border-primary/50"
                                                             )}
                                                         >
-                                                            {eq}
+                                                            {eq.label}
                                                         </button>
                                                     ))}
                                                 </div>
@@ -395,7 +427,7 @@ export default function OnboardingWizard() {
                                                     onClick={() => updateField('trainingEquipment', [])}
                                                     className="w-full text-muted-foreground"
                                                 >
-                                                    I only use Bodyweight
+                                                    Koristim samo telesnu težinu
                                                 </Button>
                                             </>
                                         )}
@@ -406,18 +438,23 @@ export default function OnboardingWizard() {
                                 {currentStep === 11 && (
                                     <div className="space-y-4">
                                         <div className="grid grid-cols-2 gap-3">
-                                            {['Whey Protein', 'Creatine', 'Vitamins', 'BCAAs'].map((supp) => (
+                                            {[
+                                                { label: 'Whey Protein', value: 'whey' },
+                                                { label: 'Kreatin', value: 'creatine' },
+                                                { label: 'Vitamini', value: 'vitamins' },
+                                                { label: 'BCAA', value: 'bcaas' }
+                                            ].map((supp) => (
                                                 <button
-                                                    key={supp}
-                                                    onClick={() => toggleArrayItem('supplements', supp)}
+                                                    key={supp.value}
+                                                    onClick={() => toggleArrayItem('supplements', supp.value)}
                                                     className={cn(
                                                         "h-24 rounded-2xl border-2 flex items-center justify-center p-2 text-center text-sm font-semibold transition-all",
-                                                        (formData.supplements as string[]).includes(supp)
+                                                        (formData.supplements as string[]).includes(supp.value)
                                                             ? "border-primary bg-primary/10 text-primary"
                                                             : "border-border hover:border-primary/50"
                                                     )}
                                                 >
-                                                    {supp}
+                                                    {supp.label}
                                                 </button>
                                             ))}
                                         </div>
@@ -426,7 +463,7 @@ export default function OnboardingWizard() {
                                             onClick={() => updateField('supplements', [])}
                                             className="w-full text-muted-foreground"
                                         >
-                                            I don't take specific supplements
+                                            Ne koristim specifične suplemente
                                         </Button>
                                     </div>
                                 )}
@@ -434,19 +471,24 @@ export default function OnboardingWizard() {
                                 {/* 13. SLEEP */}
                                 {currentStep === 12 && (
                                     <div className="space-y-3">
-                                        {['Excellent (>8h)', 'Good (7-8h)', 'Fair (6-7h)', 'Poor (<6h)'].map((sleep) => (
+                                        {[
+                                            { label: 'Odličan (>8h)', value: 'excellent' },
+                                            { label: 'Dobar (7-8h)', value: 'good' },
+                                            { label: 'Prosečan (6-7h)', value: 'fair' },
+                                            { label: 'Loš (<6h)', value: 'poor' }
+                                        ].map((sleep) => (
                                             <button
-                                                key={sleep}
-                                                onClick={() => updateField('sleep', sleep.split(' ')[0].toLowerCase())}
+                                                key={sleep.value}
+                                                onClick={() => updateField('sleep', sleep.value)}
                                                 className={cn(
                                                     "w-full p-4 rounded-2xl border-2 text-left font-semibold transition-all flex justify-between items-center",
-                                                    formData.sleep === sleep.split(' ')[0].toLowerCase()
+                                                    formData.sleep === sleep.value
                                                         ? "border-primary bg-primary/10 text-primary"
                                                         : "border-border hover:border-primary/50"
                                                 )}
                                             >
-                                                {sleep}
-                                                {formData.sleep === sleep.split(' ')[0].toLowerCase() && <Check className="w-5 h-5 text-primary" />}
+                                                {sleep.label}
+                                                {formData.sleep === sleep.value && <Check className="w-5 h-5 text-primary" />}
                                             </button>
                                         ))}
                                     </div>
@@ -457,10 +499,10 @@ export default function OnboardingWizard() {
                                     <div className="flex flex-col items-center justify-center border-2 border-dashed border-border rounded-3xl p-8 space-y-4">
                                         <Upload className="w-12 h-12 text-muted-foreground" />
                                         <div className="text-center">
-                                            <p className="font-semibold">Upload a photo (Optional)</p>
-                                            <p className="text-xs text-muted-foreground mt-1">Our AI can analyze your body type for better suggestions.</p>
+                                            <p className="font-semibold">Dodaj fotografiju (Opciono)</p>
+                                            <p className="text-xs text-muted-foreground mt-1">Naš AI može analizirati vaš tip tela za bolje sugestije.</p>
                                         </div>
-                                        <Button variant="outline" className="rounded-full">Choose Photo</Button>
+                                        <Button variant="outline" className="rounded-full">Izaberi fotografiju</Button>
                                     </div>
                                 )}
 
@@ -469,7 +511,7 @@ export default function OnboardingWizard() {
                                     <div className="space-y-4">
                                         <div className="relative">
                                             <Textarea
-                                                placeholder="E.g., I have a home gym with dumbbells, I hate broccoli..."
+                                                placeholder="Npr. imam kućnu teretanu sa bučicama, mrzim brokoli..."
                                                 className="min-h-[150px] rounded-2xl resize-none p-4 text-lg"
                                                 value={formData.aiInput}
                                                 onChange={(e) => updateField('aiInput', e.target.value)}
@@ -482,7 +524,7 @@ export default function OnboardingWizard() {
                                             </Button>
                                         </div>
                                         <p className="text-xs text-center text-muted-foreground">
-                                            Use voice or text to tell your coach anything specific.
+                                            Koristite glas ili tekstualnu poruku da kažete vašem treneru bilo šta specifično.
                                         </p>
                                     </div>
                                 )}
@@ -497,7 +539,7 @@ export default function OnboardingWizard() {
                         onClick={handleNext}
                         className="w-full h-14 text-lg font-bold rounded-full shadow-lg hover:shadow-xl transition-all"
                     >
-                        {currentStep === totalSteps - 1 ? 'Start My Journey' : 'Continue'}
+                        {currentStep === totalSteps - 1 ? 'Započni moje putovanje' : 'Nastavi'}
                         {currentStep < totalSteps - 1 && <ChevronRight className="ml-2 w-5 h-5" />}
                     </Button>
 
@@ -507,7 +549,7 @@ export default function OnboardingWizard() {
                             onClick={handleBack}
                             className="w-full text-muted-foreground hover:text-foreground"
                         >
-                            Back
+                            Nazad
                         </Button>
                     )}
                 </div>
