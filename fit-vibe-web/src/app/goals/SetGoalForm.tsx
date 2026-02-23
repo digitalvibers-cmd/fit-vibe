@@ -1,6 +1,6 @@
 'use client'
 
-import { useActionState, useState } from 'react'
+import { useActionState, useState, useEffect } from 'react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -30,6 +30,13 @@ const initialState: GoalState = {
 export default function SetGoalForm({ currentTarget, currentDate }: { currentTarget?: number, currentDate?: string }) {
     const [open, setOpen] = useState(false)
     const [state, formAction, isPending] = useActionState(updateGoal, initialState)
+
+    useEffect(() => {
+        if (state?.success) {
+            const timer = setTimeout(() => setOpen(false), 1000)
+            return () => clearTimeout(timer)
+        }
+    }, [state?.success])
 
     return (
         <Dialog open={open} onOpenChange={setOpen}>

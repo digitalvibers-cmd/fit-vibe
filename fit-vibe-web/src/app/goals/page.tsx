@@ -73,8 +73,10 @@ export default async function GoalsPage() {
                                 <div>
                                     <p className="text-sm text-muted-foreground uppercase tracking-wider font-medium">Ciljana težina</p>
                                     <p className="text-2xl font-bold text-primary">{targetWeight} kg</p>
+                                    <p className="text-sm text-muted-foreground uppercase tracking-wider font-medium mt-4">Trenutna težina</p>
+                                    <p className="text-xl font-bold text-foreground">{currentWeight} kg</p>
                                     {goal.target_date && (
-                                        <p className="text-xs text-muted-foreground mt-1">Do: {new Date(goal.target_date).toLocaleDateString('sr-RS')}</p>
+                                        <p className="text-xs text-muted-foreground mt-2">Rok: {new Date(goal.target_date).toLocaleDateString('sr-RS')}</p>
                                     )}
                                 </div>
                                 <SetGoalForm currentTarget={targetWeight} currentDate={goal.target_date} />
@@ -106,8 +108,7 @@ export default async function GoalsPage() {
 
                 <div className="flex justify-between items-center mt-8">
                     <div>
-                        <h2 className="text-sm text-muted-foreground uppercase tracking-wider font-medium">Trenutna težina</h2>
-                        <p className="text-4xl font-black text-foreground">{currentWeight} <span className="text-lg font-medium text-muted-foreground">kg</span></p>
+                        <h2 className="text-sm text-muted-foreground uppercase tracking-wider font-medium">Istorija merenja</h2>
                     </div>
                     <LogWeightForm />
                 </div>

@@ -33,6 +33,6 @@ describe('ProfileForm', () => {
 
     it('has a submit button', () => {
         render(<ProfileForm profile={mockProfile} />)
-        expect(screen.getByRole('button', { name: /save changes/i })).toBeInTheDocument()
+        expect(screen.getByRole('button', { name: /sačuvaj izmene/i })).toBeInTheDocument()
     })
 })

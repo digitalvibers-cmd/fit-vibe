@@ -1,0 +1,10 @@
+{
+    "mcpServers": {
+        "notebooklm": {
+            "command": "/Users/buco/.local/bin/uvx",
+            "args": [
+                "notebooklm-mcp"
+            ]
+        }
+    }
+}

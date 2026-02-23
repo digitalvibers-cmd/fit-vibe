@@ -11,11 +11,11 @@ describe('BottomNav', () => {
     it('renders navigation items on dashboard', () => {
         render(<BottomNav />)
 
-        expect(screen.getByTestId('nav-home')).toBeInTheDocument()
-        expect(screen.getByTestId('nav-workout')).toBeInTheDocument()
-        expect(screen.getByTestId('nav-meals')).toBeInTheDocument()
-        // expect(screen.getByTestId('nav-progress')).toBeInTheDocument() 
-        expect(screen.getByTestId('nav-profile')).toBeInTheDocument()
+        expect(screen.getByTestId('nav-početna')).toBeInTheDocument()
+        expect(screen.getByTestId('nav-trening')).toBeInTheDocument()
+        expect(screen.getByTestId('nav-ishrana')).toBeInTheDocument()
+        expect(screen.getByTestId('nav-progres')).toBeInTheDocument()
+        expect(screen.getByTestId('nav-profil')).toBeInTheDocument()
     })
 
     // We would need to mock different pathnames to test active states, 
