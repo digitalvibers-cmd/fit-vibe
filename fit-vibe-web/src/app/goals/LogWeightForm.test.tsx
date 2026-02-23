@@ -20,7 +20,7 @@ jest.mock('../../components/ui/dialog', () => ({
 describe('LogWeightForm', () => {
     it('renders log weight button', () => {
         render(<LogWeightForm />)
-        // The button text is "Log Weight" inside DialogTrigger
-        expect(screen.getByText(/Log Weight/i)).toBeInTheDocument()
+        // The button text is "Upiši težinu" after Serbian translation
+        expect(screen.getByText(/Upiši težinu/i)).toBeInTheDocument()
     })
 })

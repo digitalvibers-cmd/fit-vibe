@@ -8,10 +8,10 @@ export default function GoalsChart({ data }: { data: any[] }) {
         return (
             <Card>
                 <CardHeader>
-                    <CardTitle>Weight Progress</CardTitle>
+                    <CardTitle>Napredak u težini</CardTitle>
                 </CardHeader>
                 <CardContent className="h-[300px] flex items-center justify-center text-muted-foreground">
-                    No weight data logged yet.
+                    Još uvek nema upisanih merenja.
                 </CardContent>
             </Card>
         )
@@ -26,7 +26,7 @@ export default function GoalsChart({ data }: { data: any[] }) {
     return (
         <Card>
             <CardHeader>
-                <CardTitle>Weight Progress</CardTitle>
+                <CardTitle>Napredak u težini</CardTitle>
             </CardHeader>
             <CardContent>
                 <div className="h-[300px] w-full">

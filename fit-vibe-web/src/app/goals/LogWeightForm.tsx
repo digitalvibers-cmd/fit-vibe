@@ -1,6 +1,6 @@
 'use client'
 
-import { useActionState, useState } from 'react'
+import { useActionState, useState, useEffect } from 'react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -31,27 +31,31 @@ export default function LogWeightForm() {
     const [open, setOpen] = useState(false)
     const [state, formAction, isPending] = useActionState(logWeight, initialState)
 
-    // Close dialog on success strictly if we wanted, but useActionState doesn't give callback easily without useEffect.
-    // For now, simpler UI.
+    useEffect(() => {
+        if (state?.success) {
+            const timer = setTimeout(() => setOpen(false), 1000)
+            return () => clearTimeout(timer)
+        }
+    }, [state?.success])
 
     return (
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
                 <Button className="gap-2">
-                    <Plus className="w-4 h-4" /> Log Weight
+                    <Plus className="w-4 h-4" /> Upiši težinu
                 </Button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-[425px]">
                 <DialogHeader>
-                    <DialogTitle>Log Today's Weight</DialogTitle>
+                    <DialogTitle>Upiši današnju težinu</DialogTitle>
                     <DialogDescription>
-                        Enter your current weight to track your progress.
+                        Unesi svoju trenutnu težinu kako bi pratio napredak.
                     </DialogDescription>
                 </DialogHeader>
                 <form action={formAction} className="grid gap-4 py-4">
                     <div className="grid grid-cols-4 items-center gap-4">
                         <Label htmlFor="weight" className="text-right">
-                            Weight (kg)
+                            Težina (kg)
                         </Label>
                         <Input
                             id="weight"
@@ -73,7 +77,7 @@ export default function LogWeightForm() {
                     <div className="flex justify-end">
                         <Button type="submit" disabled={isPending}>
                             {isPending ? <Loader2 className="animate-spin w-4 h-4 mr-2" /> : null}
-                            Save
+                            Sačuvaj
                         </Button>
                     </div>
                 </form>

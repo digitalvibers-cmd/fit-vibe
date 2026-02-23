@@ -28,11 +28,13 @@ export default async function GoalsPage() {
     const currentWeight = logs && logs.length > 0 ? logs[0].weight : 'N/A'
 
     // Fetch Goal
-    const { data: goal } = await supabase
+    const { data: goal, error: goalError } = await supabase
         .from('goals')
         .select('*')
         .eq('user_id', user.id)
-        .single()
+        .order('created_at', { ascending: false })
+        .limit(1)
+        .maybeSingle()
 
     // Calculate progress
     let startWeight = goal?.current_weight || (currentWeight !== 'N/A' ? currentWeight : 0);
