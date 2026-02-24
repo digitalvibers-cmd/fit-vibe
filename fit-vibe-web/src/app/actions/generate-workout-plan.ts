@@ -2,10 +2,11 @@
 
 import { createClient } from '@/utils/supabase/server'
 import { revalidatePath } from 'next/cache'
-import OpenAI from 'openai'
+import { GoogleGenAI } from '@google/genai'
+import { FITNESS_KNOWLEDGE } from '@/knowledge-base'
 
-const openai = new OpenAI({
-    apiKey: process.env.OPENAI_API_KEY,
+const ai = new GoogleGenAI({
+    apiKey: process.env.GEMINI_API_KEY,
 })
 
 export async function generateWorkoutPlan(durationInDays: number) {
@@ -75,13 +76,16 @@ export async function generateWorkoutPlan(durationInDays: number) {
   `
 
     try {
-        const completion = await openai.chat.completions.create({
-            messages: [{ role: "system", content: "You are an expert fitness coach." }, { role: "user", content: prompt }],
-            model: "gpt-4o-mini",
-            response_format: { type: "json_object" },
+        const response = await ai.models.generateContent({
+            model: 'gemini-1.5-flash',
+            contents: prompt,
+            config: {
+                systemInstruction: "You are an expert fitness coach. Use the provided fitness knowledge base to ground your workout recommendations. If the knowledge base mentions specific exercises, resistance band logic, or tips, apply them strictly to the generated workout plan.\n\n### FITNESS KNOWLEDGE BASE\n" + FITNESS_KNOWLEDGE,
+                responseMimeType: "application/json",
+            }
         });
 
-        const planContent = completion.choices[0].message.content
+        const planContent = response.text;
         if (!planContent) throw new Error("No content generated")
 
         const workoutPlan = JSON.parse(planContent)
