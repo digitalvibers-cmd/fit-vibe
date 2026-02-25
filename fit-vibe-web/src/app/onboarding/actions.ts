@@ -4,6 +4,8 @@ import { createClient } from '@/utils/supabase/server'
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { z } from 'zod'
+import { generateWorkoutPlan } from '../actions/generate-workout-plan'
+import { generateMealPlan } from '../actions/generate-meal-plan'
 
 const onboardingSchema = z.object({
     age: z.coerce.number().min(10).max(100),
@@ -82,6 +84,18 @@ export async function submitOnboarding(data: z.infer<typeof onboardingSchema>) {
     if (goalError) {
         console.error('Goal insert error:', goalError)
         return { error: 'Failed to create goal' }
+    }
+
+    try {
+        console.log('Generating initial 7-day plans...')
+        // Generate a 7-day initial plan for workouts and meals concurrently
+        await Promise.all([
+            generateWorkoutPlan(7),
+            generateMealPlan(7)
+        ])
+    } catch (err) {
+        console.error('Failed to generate initial plans:', err)
+        // We log the error but do not block the onboarding logic to ensure user reaches dashboard
     }
 
     revalidatePath('/dashboard')
