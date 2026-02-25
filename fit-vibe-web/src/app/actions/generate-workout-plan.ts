@@ -77,7 +77,7 @@ export async function generateWorkoutPlan(durationInDays: number) {
 
     try {
         const response = await ai.models.generateContent({
-            model: 'gemini-1.5-flash',
+            model: 'gemini-2.5-flash',
             contents: prompt,
             config: {
                 systemInstruction: "You are an expert fitness coach. Use the provided fitness knowledge base to ground your workout recommendations. If the knowledge base mentions specific exercises, resistance band logic, or tips, apply them strictly to the generated workout plan.\n\n### FITNESS KNOWLEDGE BASE\n" + FITNESS_KNOWLEDGE,
