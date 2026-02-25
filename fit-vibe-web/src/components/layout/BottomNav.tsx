@@ -8,8 +8,13 @@ import { cn } from '@/lib/utils'
 export default function BottomNav() {
     const pathname = usePathname()
 
-    // Hide on login/register/onboarding pages
-    if (['/login', '/register', '/onboarding', '/'].includes(pathname)) {
+    // Hide on login/register/onboarding and all static pages
+    const hiddenPaths = [
+        '/login', '/register', '/onboarding', '/',
+        '/o-nama', '/uslovi-koriscenja', '/politika-privatnosti',
+        '/kontakt', '/faq', '/cenovnik', '/opcije'
+    ]
+    if (hiddenPaths.includes(pathname)) {
         return null
     }
 

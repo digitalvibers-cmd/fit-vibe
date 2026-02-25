@@ -1,5 +1,6 @@
 import { Navbar } from "@/components/layout/Navbar";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { Activity } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 
