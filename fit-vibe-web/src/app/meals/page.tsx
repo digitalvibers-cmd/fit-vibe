@@ -8,6 +8,7 @@ import { ChevronLeft, ChevronRight, Plus, Calendar, Utensils, CheckCircle2 } fro
 import WeekCalendar from '@/components/common/WeekCalendar'
 import { formatDate } from '@/utils/date-helpers'
 import GenerateMeal from './GenerateMeal'
+import RegenerateMealModal from '@/components/meals/RegenerateMealModal'
 
 export default async function MealsPage(props: { searchParams: Promise<{ [key: string]: string | string[] | undefined }> }) {
     const searchParams = await props.searchParams
@@ -70,8 +71,11 @@ export default async function MealsPage(props: { searchParams: Promise<{ [key: s
                             <div className="text-sm font-bold text-muted-foreground uppercase tracking-wider">
                                 Dan {targetMealDay} od {latestPlan.durationInDays}
                             </div>
-                            <div className="bg-primary/10 text-primary text-xs font-bold px-3 py-1 rounded-full">
-                                Aktivni plan
+                            <div className="flex items-center gap-2">
+                                <RegenerateMealModal />
+                                <div className="bg-primary/10 text-primary text-xs font-bold px-3 py-1 rounded-full">
+                                    Aktivni plan
+                                </div>
                             </div>
                         </div>
 

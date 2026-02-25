@@ -8,6 +8,7 @@ import { ChevronLeft, ChevronRight, PlayCircle, Timer, Activity, Dumbbell } from
 import WeekCalendar from '@/components/common/WeekCalendar'
 import { formatDate } from '@/utils/date-helpers'
 import GenerateWorkout from './GenerateWorkout'
+import RegenerateWorkoutModal from '@/components/workout/RegenerateWorkoutModal'
 
 export default async function WorkoutPage(props: { searchParams: Promise<{ [key: string]: string | string[] | undefined }> }) {
     const searchParams = await props.searchParams
@@ -72,8 +73,11 @@ export default async function WorkoutPage(props: { searchParams: Promise<{ [key:
                                 <div className="text-sm font-bold text-muted-foreground uppercase tracking-wider">
                                     Dan {targetWorkoutDay} od {latestPlan.durationInDays}
                                 </div>
-                                <div className="bg-primary/10 text-primary text-xs font-bold px-3 py-1 rounded-full">
-                                    Aktivni plan
+                                <div className="flex items-center gap-2">
+                                    <RegenerateWorkoutModal />
+                                    <div className="bg-primary/10 text-primary text-xs font-bold px-3 py-1 rounded-full">
+                                        Aktivni plan
+                                    </div>
                                 </div>
                             </div>
 
