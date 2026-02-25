@@ -56,6 +56,8 @@ export async function generateWorkoutPlan(durationInDays: number) {
     If they train at home, use only the available equipment provided, or bodyweight exercises.
     Leave rest days empty or specify active recovery.
     
+    CRITICAL INSTRUCTION: The entire output MUST be written in Serbian language (Srpski jezik). Translate all titles, exercise names, instructions, warmups, and cooldowns to Serbian. Do not use English words.
+
     Output ONLY standard JSON format (no markdown):
     {
       "durationInDays": ${durationInDays},
@@ -80,7 +82,7 @@ export async function generateWorkoutPlan(durationInDays: number) {
             model: 'gemini-2.5-flash',
             contents: prompt,
             config: {
-                systemInstruction: "You are an expert fitness coach. Use the provided fitness knowledge base to ground your workout recommendations. If the knowledge base mentions specific exercises, resistance band logic, or tips, apply them strictly to the generated workout plan.\n\n### FITNESS KNOWLEDGE BASE\n" + FITNESS_KNOWLEDGE,
+                systemInstruction: "You are an expert fitness coach. Use the provided fitness knowledge base to ground your workout recommendations. If the knowledge base mentions specific exercises, resistance band logic, or tips, apply them strictly to the generated workout plan. IMPORTANT: ALL OUTPUT MUST BE IN SERBIAN LANGUAGE (SRPSKI JEZIK).\n\n### FITNESS KNOWLEDGE BASE\n" + FITNESS_KNOWLEDGE,
                 responseMimeType: "application/json",
             }
         });

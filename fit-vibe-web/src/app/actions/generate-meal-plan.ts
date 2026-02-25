@@ -50,6 +50,8 @@ export async function generateMealPlan(durationInDays: number) {
 
     Vary the meals each day so it is not boring.
     
+    CRITICAL INSTRUCTION: The entire output MUST be written in Serbian language (Srpski jezik). Translate all daily goals, meal names, food items, and macro descriptions to Serbian. Do not use English words.
+
     Output ONLY standard JSON format (no markdown):
     {
       "durationInDays": ${durationInDays},
@@ -69,7 +71,7 @@ export async function generateMealPlan(durationInDays: number) {
 
     try {
         const completion = await openai.chat.completions.create({
-            messages: [{ role: "system", content: "You are an expert nutritionist." }, { role: "user", content: prompt }],
+            messages: [{ role: "system", content: "You are an expert nutritionist. IMPORTANT: ALL OUTPUT MUST BE IN SERBIAN LANGUAGE (SRPSKI JEZIK)." }, { role: "user", content: prompt }],
             model: "gpt-4o-mini",
             response_format: { type: "json_object" },
         });
