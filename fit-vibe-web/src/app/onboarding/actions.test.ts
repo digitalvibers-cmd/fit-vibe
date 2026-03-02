@@ -55,6 +55,7 @@ describe('submitOnboarding', () => {
         injuries: ['none'],
         diet: 'classic',
         commitment: 4,
+        planDuration: 7,
         trainingLocation: 'gym',
         trainingEquipment: [],
         supplements: ['whey'],

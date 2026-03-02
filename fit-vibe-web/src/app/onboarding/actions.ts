@@ -18,6 +18,7 @@ const onboardingSchema = z.object({
     injuries: z.array(z.string()).optional(),
     diet: z.string().optional(),
     commitment: z.coerce.number().min(1).max(7).optional(),
+    planDuration: z.coerce.number().min(7).max(90).optional(),
     trainingLocation: z.string().optional(),
     trainingEquipment: z.array(z.string()).optional(),
     supplements: z.array(z.string()).optional(),
@@ -56,6 +57,7 @@ export async function submitOnboarding(data: z.infer<typeof onboardingSchema>) {
                 injuries: validData.injuries,
                 diet: validData.diet,
                 commitment: validData.commitment,
+                planDuration: validData.planDuration,
                 trainingLocation: validData.trainingLocation,
                 trainingEquipment: validData.trainingEquipment,
                 supplements: validData.supplements,
@@ -87,11 +89,12 @@ export async function submitOnboarding(data: z.infer<typeof onboardingSchema>) {
     }
 
     try {
-        console.log('Generating initial 7-day plans...')
-        // Generate a 7-day initial plan for workouts and meals concurrently
+        const pDuration = validData.planDuration || 7
+        console.log(`Generating initial ${pDuration}-day plans...`)
+        // Generate a dynamic initial plan for workouts and meals concurrently
         await Promise.all([
-            generateWorkoutPlan(7),
-            generateMealPlan(7)
+            generateWorkoutPlan(pDuration),
+            generateMealPlan(pDuration)
         ])
     } catch (err) {
         console.error('Failed to generate initial plans:', err)

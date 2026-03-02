@@ -22,6 +22,7 @@ const STEPS = [
     { id: 'injuries', title: 'Imate li neke povrede?' },
     { id: 'diet', title: 'Da li pratite poseban režim ishrane?' },
     { id: 'commitment', title: 'Koliko dana nedeljno planirate da trenirate?' },
+    { id: 'planDuration', title: 'Na koliko dana želite da vam napravimo plan?' },
     { id: 'training_location', title: 'Gde preferirate da trenirate?' },
     { id: 'training_equipment', title: 'Koju opremu imate na raspolaganju?' },
     { id: 'supplements', title: 'Da li koristite suplemente?' },
@@ -43,6 +44,7 @@ export default function OnboardingWizard() {
         injuries: [] as string[],
         diet: 'classic',
         commitment: 3,
+        planDuration: 7,
         trainingLocation: 'gym',
         trainingEquipment: [] as string[],
         activityLevel: 'moderate',
@@ -366,8 +368,33 @@ export default function OnboardingWizard() {
                                     </div>
                                 )}
 
-                                {/* 10. TRAINING LOCATION */}
+                                {/* 10. PLAN DURATION */}
                                 {currentStep === 9 && (
+                                    <div className="grid grid-cols-2 gap-4">
+                                        {[
+                                            { label: '7 Dana', value: 7 },
+                                            { label: '14 Dana', value: 14 },
+                                            { label: '21 Dan', value: 21 },
+                                            { label: '30 Dana', value: 30 }
+                                        ].map((dur) => (
+                                            <button
+                                                key={dur.value}
+                                                onClick={() => updateField('planDuration', dur.value)}
+                                                className={cn(
+                                                    "h-32 rounded-2xl border-2 flex flex-col items-center justify-center gap-2 transition-all",
+                                                    formData.planDuration === dur.value
+                                                        ? "border-primary bg-primary/10 text-primary"
+                                                        : "border-border hover:border-primary/50"
+                                                )}
+                                            >
+                                                <span className="text-2xl font-bold">{dur.label}</span>
+                                            </button>
+                                        ))}
+                                    </div>
+                                )}
+
+                                {/* 11. TRAINING LOCATION */}
+                                {currentStep === 10 && (
                                     <div className="grid grid-cols-2 gap-4">
                                         {[
                                             { label: 'Teretana', value: 'gym' },
@@ -389,8 +416,8 @@ export default function OnboardingWizard() {
                                     </div>
                                 )}
 
-                                {/* 11. TRAINING EQUIPMENT */}
-                                {currentStep === 10 && (
+                                {/* 12. TRAINING EQUIPMENT */}
+                                {currentStep === 11 && (
                                     <div className="space-y-4">
                                         {formData.trainingLocation === 'gym' ? (
                                             <div className="text-center space-y-4">
@@ -434,8 +461,8 @@ export default function OnboardingWizard() {
                                     </div>
                                 )}
 
-                                {/* 12. SUPPLEMENTS */}
-                                {currentStep === 11 && (
+                                {/* 13. SUPPLEMENTS */}
+                                {currentStep === 12 && (
                                     <div className="space-y-4">
                                         <div className="grid grid-cols-2 gap-3">
                                             {[
@@ -468,8 +495,8 @@ export default function OnboardingWizard() {
                                     </div>
                                 )}
 
-                                {/* 13. SLEEP */}
-                                {currentStep === 12 && (
+                                {/* 14. SLEEP */}
+                                {currentStep === 13 && (
                                     <div className="space-y-3">
                                         {[
                                             { label: 'Odličan (>8h)', value: 'excellent' },
@@ -494,8 +521,8 @@ export default function OnboardingWizard() {
                                     </div>
                                 )}
 
-                                {/* 14. BODY ANALYSIS (Placeholder) */}
-                                {currentStep === 13 && (
+                                {/* 15. BODY ANALYSIS (Placeholder) */}
+                                {currentStep === 14 && (
                                     <div className="flex flex-col items-center justify-center border-2 border-dashed border-border rounded-3xl p-8 space-y-4">
                                         <Upload className="w-12 h-12 text-muted-foreground" />
                                         <div className="text-center">
@@ -506,8 +533,8 @@ export default function OnboardingWizard() {
                                     </div>
                                 )}
 
-                                {/* 15. AI INPUT */}
-                                {currentStep === 14 && (
+                                {/* 16. AI INPUT */}
+                                {currentStep === 15 && (
                                     <div className="space-y-4">
                                         <div className="relative">
                                             <Textarea
@@ -534,7 +561,7 @@ export default function OnboardingWizard() {
                     </AnimatePresence>
                 </CardContent>
 
-                <div className="mt-8 space-y-4">
+                <div className="mt-8 space-y-4 w-full max-w-md">
                     <Button
                         onClick={handleNext}
                         className="w-full h-14 text-lg font-bold rounded-full shadow-lg hover:shadow-xl transition-all"
