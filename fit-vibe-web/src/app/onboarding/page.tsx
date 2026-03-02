@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from 'react'
+import { useRouter } from 'next/navigation'
 import { submitOnboarding } from './actions'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
@@ -32,6 +33,7 @@ const STEPS = [
 ]
 
 export default function OnboardingWizard() {
+    const router = useRouter()
     const [currentStep, setCurrentStep] = useState(0)
     const [formData, setFormData] = useState({
         goal: '',
@@ -73,14 +75,17 @@ export default function OnboardingWizard() {
             setCurrentStep(prev => prev + 1)
         } else {
             // Submit
+            const toastId = toast.loading('Kreiramo tvoj personalizovani plan...')
             try {
-                toast.promise(submitOnboarding(formData), {
-                    loading: 'Kreiramo tvoj personalizovani plan...',
-                    success: 'Dobrodošli u Fit Vibe!',
-                    error: 'Greška pri kreiranju profila.'
-                })
+                const result = await submitOnboarding(formData)
+                if (result?.error) {
+                    toast.error('Greška pri kreiranju profila.', { id: toastId })
+                } else {
+                    toast.success('Dobrodošli u Fit Vibe! 🎉', { id: toastId })
+                    router.push('/dashboard')
+                }
             } catch (error) {
-                toast.error("Došlo je do greške.")
+                toast.error('Došlo je do greške.', { id: toastId })
             }
         }
     }

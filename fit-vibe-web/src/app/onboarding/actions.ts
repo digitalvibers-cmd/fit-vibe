@@ -2,7 +2,6 @@
 
 import { createClient } from '@/utils/supabase/server'
 import { revalidatePath } from 'next/cache'
-import { redirect } from 'next/navigation'
 import { z } from 'zod'
 import { generateWorkoutPlan } from '../actions/generate-workout-plan'
 import { generateMealPlan } from '../actions/generate-meal-plan'
@@ -102,5 +101,5 @@ export async function submitOnboarding(data: z.infer<typeof onboardingSchema>) {
     }
 
     revalidatePath('/dashboard')
-    redirect('/dashboard')
+    return { success: true }
 }
