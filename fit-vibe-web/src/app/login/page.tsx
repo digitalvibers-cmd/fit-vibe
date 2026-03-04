@@ -33,7 +33,12 @@ export default function LoginPage() {
                             <Input id="email" name="email" type="email" placeholder="m@example.com" required />
                         </div>
                         <div className="grid gap-2">
-                            <Label htmlFor="password">Lozinka</Label>
+                            <div className="flex items-center justify-between">
+                                <Label htmlFor="password">Lozinka</Label>
+                                <Link href="/zaboravljena-lozinka" className="text-sm underline text-muted-foreground hover:text-foreground">
+                                    Zaboravili ste lozinku?
+                                </Link>
+                            </div>
                             <Input id="password" name="password" type="password" required />
                         </div>
                         <Button className="w-full" type="submit" disabled={isPending}>
