@@ -9,6 +9,7 @@ import WeekCalendar from '@/components/common/WeekCalendar'
 import { formatDate } from '@/utils/date-helpers'
 import GenerateWorkout from './GenerateWorkout'
 import RegenerateWorkoutModal from '@/components/workout/RegenerateWorkoutModal'
+import ExerciseVideoButton from '@/components/workout/ExerciseVideoButton'
 
 export default async function WorkoutPage(props: { searchParams: Promise<{ [key: string]: string | string[] | undefined }> }) {
     const searchParams = await props.searchParams
@@ -147,6 +148,10 @@ export default async function WorkoutPage(props: { searchParams: Promise<{ [key:
                                                     {exercise.notes && (
                                                         <p className="text-xs text-muted-foreground mt-2 border-t pt-2">{exercise.notes}</p>
                                                     )}
+                                                    <ExerciseVideoButton
+                                                        exerciseName={exercise.name}
+                                                        exerciseEnglishName={exercise.englishName}
+                                                    />
                                                 </div>
                                             </CardContent>
                                         </Card>

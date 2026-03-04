@@ -69,7 +69,7 @@ export async function generateWorkoutPlan(durationInDays: number) {
           "duration": "45 mins",
           "warmup": "5 mins...",
           "exercises": [
-            {"name": "Exercise 1", "sets": "3", "reps": "12", "notes": "..."}
+            {"name": "Ime vežbe na srpskom", "englishName": "Exercise name in English", "sets": "3", "reps": "12", "notes": "..."}
           ],
           "cooldown": "5 mins..."
         }

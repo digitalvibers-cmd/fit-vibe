@@ -35,6 +35,7 @@ const STEPS = [
 export default function OnboardingWizard() {
     const router = useRouter()
     const [currentStep, setCurrentStep] = useState(0)
+    const [isLoading, setIsLoading] = useState(false)
     const [formData, setFormData] = useState({
         goal: '',
         gender: 'male' as 'male' | 'female' | 'other',
@@ -75,17 +76,25 @@ export default function OnboardingWizard() {
             setCurrentStep(prev => prev + 1)
         } else {
             // Submit
+            setIsLoading(true)
             const toastId = toast.loading('Kreiramo tvoj personalizovani plan...')
             try {
                 const result = await submitOnboarding(formData)
                 if (result?.error) {
-                    toast.error('Greška pri kreiranju profila.', { id: toastId })
+                    console.error('Onboarding submit error:', result.error)
+                    toast.error(
+                        typeof result.error === 'string' ? result.error : 'Greška pri kreiranju profila.',
+                        { id: toastId }
+                    )
                 } else {
                     toast.success('Dobrodošli u Fit Vibe! 🎉', { id: toastId })
                     router.push('/dashboard')
                 }
             } catch (error) {
-                toast.error('Došlo je do greške.', { id: toastId })
+                console.error('Onboarding exception:', error)
+                toast.error('Došlo je do greške. Pokušajte ponovo.', { id: toastId })
+            } finally {
+                setIsLoading(false)
             }
         }
     }
@@ -569,10 +578,11 @@ export default function OnboardingWizard() {
                 <div className="mt-8 space-y-4 w-full max-w-md">
                     <Button
                         onClick={handleNext}
+                        disabled={isLoading}
                         className="w-full h-14 text-lg font-bold rounded-full shadow-lg hover:shadow-xl transition-all"
                     >
-                        {currentStep === totalSteps - 1 ? 'Započni moje putovanje' : 'Nastavi'}
-                        {currentStep < totalSteps - 1 && <ChevronRight className="ml-2 w-5 h-5" />}
+                        {isLoading ? 'Molimo sačekajte...' : currentStep === totalSteps - 1 ? 'Započni moje putovanje' : 'Nastavi'}
+                        {!isLoading && currentStep < totalSteps - 1 && <ChevronRight className="ml-2 w-5 h-5" />}
                     </Button>
 
                     {currentStep > 0 && (
