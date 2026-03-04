@@ -64,7 +64,7 @@ export async function resetPasswordRequest(prevState: ActionState | null, formDa
     const email = formData.get('email') as string
 
     const { error } = await supabase.auth.resetPasswordForEmail(email, {
-        redirectTo: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://fit-vibe-blond.vercel.app'}/reset-password`,
+        redirectTo: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://fit-vibe-blond.vercel.app'}/auth/callback?next=/reset-password`,
     })
 
     if (error) {
